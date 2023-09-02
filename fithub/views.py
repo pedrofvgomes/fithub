@@ -10,10 +10,6 @@ def index(request):
     return render(request, "fithub/index.html")
 
 def profile(request):
-    if request.user.is_authenticated:
-        return render(request, "fithub/profile.html",{
-            "user" : request.user
-        })
     return redirect('index')
 
 def authentication(request):
@@ -27,7 +23,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('index'))
+            return redirect('index')
         else:
             return redirect('authentication')
     else:
@@ -46,10 +42,10 @@ def signup_view(request):
             user = User.objects.create_user(username = username, password = password)
             user.save()
         except IntegrityError:
-            return authentication(request)
+            return redirect('authentication')
         return redirect('index')
     else:
-        return authentication(request)
+        return redirect('authentication')
     
 def logout_view(request):
     logout(request)
