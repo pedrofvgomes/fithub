@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>FitHub</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale = 1">
+        <link rel="stylesheet" href="../../static/fithub/styles.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    </head>
+    <body id="mainpage">
+        <div id="food">
+            <div id="calories">
+                <h2>September 1st</h2>
+                <h1>1300/2500 kcal</h1>
+                <progress value="1300" max="2500"></progress>
+            </div>
+
+            <div id="logs">
+                <h2 class="meal-title">Breakfast</h2>
+                <ul id="breakfast">
+
+                </ul>
+
+                <h2 class="meal-title">Lunch</h2>
+                <ul id="lunch">
+                    
+                </ul>
+
+                <h2 class="meal-title">Dinner</h2>
+                <ul id="dinner">
+                    
+                </ul>
+
+                <h2 class="meal-title">Snacks</h2>
+                <ul id="snacks">
+                    
+                </ul>
+            </div>
+
+            <button id="add-food">Add Food</button>
+        </div>
+
+        <div id="weight">
+            <div id="info">
+                <h2>This week's weight: </h2>
+                <h1>81.3kg</h1>
+                <span>(-5.3%)</span>
+            </div>
+            <hr>
+            <div id="graph">
+                <h2>Weight Evolution</h2>
+                <canvas id="weightchart" style="width: 100%; max-width: 600px;"></canvas>
+            </div>
+        </div>
+
+        <div id="profile" href="{% url 'profile' %}">
+            <span>pedrofvgomes</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#4759ca" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+              </svg>
+        </div>
+
+
+        <div id="food-log">
+            <form action="">
+
+            </form>
+        </div>
+
+        <div id="weight-log"></div>
+
+
+
+        <script>
+            const x = [1,2,3,4,5];
+            const y = [70,61.1, 65, 68, 70];
+            
+            new Chart("weightchart", {
+                type: 'line',
+                data: {
+                    labels: x,
+                    datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgb(0,0,255)",
+                        borderColor: "rgb(0,0,255)",
+                        data: y
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    scales: {
+                        yAxes: [{ticks: {min:60, max:80}}]
+                    }
+                }
+            });
+        </script>
+
+
+    </body>
+</html>
