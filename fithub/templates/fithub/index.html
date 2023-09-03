@@ -88,7 +88,7 @@
                     <p>Starting weight: <span>{{ user.starting_weight }} kg</span></p>
                     <p>Current weight: <span>{{ user.current_weight }} kg</span></p>
                     <p>Active since {{ user.date_joined|date:"d/m/Y"}}</p>
-                    <button>Edit Profile</button>
+                    <button id="{{user.id}}">Clear data</button>
                 </div>
                 <form id="edit-profile" onsubmit="event.preventDefault();">
                     {% csrf_token %}
@@ -123,7 +123,7 @@
                     </div>
                     <div>
                     <p>Basal Metabolic Rate:</p>
-                    <p>{{ user.bmr }}</p>
+                    <p>{{ user.bmr }} kcal</p>
                     </div>
                     <div>
                     <p>Activity level:</p>
@@ -131,7 +131,7 @@
                     </div>
                     <div>
                     <p>Daily caloric need:</p>
-                    <p>{{ user.daily_calories }}</p>
+                    <p>{{ user.daily_calories }} kcal</p>
                     </div>
                     <button>Edit Nutritional Info</button>
                 </div>

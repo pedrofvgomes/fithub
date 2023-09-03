@@ -330,13 +330,18 @@ progress::-webkit-progress-value {
     position: absolute;
     width: fit-content;
     padding: 0.5em;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
     background-color: #fa4d43;
     border-radius: 50px;
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.25);
+    transition: transform ease-in-out 0.1s;
 }
 #logout:hover{
     cursor: pointer;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+    transition: transform ease-in-out 0.1s;
 }
 #logout svg{
     margin-right: 5px;
@@ -371,7 +376,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 1em;
 }
 #edit-nutrition select{
-    width: 60%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
 }

@@ -143,3 +143,34 @@ def edit_nutrition(request, user_id):
     return JsonResponse({
             "error": "GET or PUT request required."
         }, status=400)
+
+
+def clear(request, user_id):
+    try:
+        user = User.objects.get(id = user_id)
+    except User.DoesNotExist:
+        return redirect('index')
+
+    if request.user != user:
+        return redirect('index')
+    
+    user.age = 0
+    user.starting_weight = 0
+    user.current_weight = 0
+    user.height = 0
+    user.gender = ""
+    user.activity = ""
+    user.objective = ""
+    user.bmr = 0
+    user.daily_calories = 0
+    user.save()
+    
+    wlogs = WeightLog.objects.filter(user = user)
+    flogs = FoodLog.objects.filter(user = user)
+
+    for i in wlogs:
+        i.delete()
+    for i in flogs:
+        i.delete()
+    
+    return redirect('index')
