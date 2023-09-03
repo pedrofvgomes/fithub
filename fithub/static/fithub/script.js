@@ -70,6 +70,14 @@ document.addEventListener('DOMContentLoaded', function(){
                 profile_info.style.display = 'block';
                 nutritional_info.style.display = 'grid';
                 document.querySelector('#edit-profile').style.display = 'none';
+
+                console.log('abc')
+
+                document.querySelector('#profile-info p:nth-child(1)').innerHTML = gender[0].toUpperCase() + gender.slice(1);
+                document.querySelector('#profile-info p:nth-child(2)').innerHTML = `${age} years old`;
+                document.querySelector('#profile-info p:nth-child(3)').innerHTML = `Height: <span> ${height} m </span>`;
+                document.querySelector('#profile-info p:nth-child(4)').innerHTML = `Starting weight: <span>${starting_weight} kg </span>`;
+                document.querySelector('#profile-info p:nth-child(5)').innerHTML = `Current weight: <span>${starting_weight} kg </span>`;
             }
         })
 
