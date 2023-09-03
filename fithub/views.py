@@ -39,6 +39,8 @@ def signup_view(request):
         try:
             user = User.objects.create_user(username = username, password = password)
             user.save()
+
+            login(request, user)
         except IntegrityError:
             return redirect('authentication')
         return redirect('index')
@@ -76,6 +78,35 @@ def edit_profile(request, user_id):
         user.save()
 
         return HttpResponse(status=204)
+    
+    return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)
+
+def user_info(request, user_id):
+    try:
+        user = User.objects.get(id = int(user_id))
+    except User.DoesNotExist:
+        return JsonResponse({"error" : "User not found"}, status=404)
+    
+    if request.user != user:
+        return redirect('index')
+    
+    if request.method == 'GET':
+        return JsonResponse({
+            "id" : user.id,
+            "username" : user.username,
+            "date_joined" : user.date_joined,
+            "age" : user.age,
+            "starting_weight" : user.starting_weight,
+            "current_weight" : user.current_weight,
+            "height" : user.height,
+            "gender" : user.gender,
+            "activity" : user.activity,
+            "objective" : user.objective,
+            "bmr" : user.bmr,
+            "daily_calories" : user.daily_calories
+        })
     
     return JsonResponse({
             "error": "GET or PUT request required."
