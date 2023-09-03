@@ -257,7 +257,9 @@ progress::-webkit-progress-value {
     right: 3.5em;
 }
 
-
+#profile-view > *{
+    display: none;
+}
 #profile-view{
     opacity: 0;
     position: absolute;
