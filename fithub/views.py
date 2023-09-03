@@ -5,10 +5,14 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from django.urls import reverse
 from .models import User, FoodLog, WeightLog
+import datetime
 
 
 def index(request):
-    return render(request, "fithub/index.html")
+    return render(request, "fithub/index.html", {
+        "calories" : 0,
+        "date" : datetime.datetime.now()
+    })
 
 def authentication(request):
     return render(request, "fithub/authentication.html")
@@ -74,6 +78,7 @@ def edit_profile(request, user_id):
 
         if data.get('starting_weight') is not None:
             user.starting_weight = data['starting_weight']
+            user.current_weight = data['starting_weight']
 
         user.save()
 

@@ -11,9 +11,9 @@
     <body id="mainpage">
         <div id="food">
             <div id="calories">
-                <h2>September 1st</h2>
-                <h1>1300/2500 kcal</h1>
-                <progress value="1300" max="2500"></progress>
+                <h2>{{ date|date:"F jS" }}</h2>
+                <h1>{{ calories }} / {{ user.daily_calories }} kcal</h1>
+                <progress value="{{ calories }}" max="{{user.daily_calories}}"></progress>
             </div>
 
             <div id="logs">

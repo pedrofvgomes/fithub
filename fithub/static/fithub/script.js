@@ -238,6 +238,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.querySelector('#nutritional-info div:nth-of-type(2) p:nth-child(2)').textContent = String(bmr);
                         document.querySelector('#nutritional-info div:nth-of-type(3) p:nth-child(2)').textContent = activity_text;
                         document.querySelector('#nutritional-info div:nth-of-type(4) p:nth-child(2)').textContent = String(daily_calories);
+
+                        document.querySelector('#calories h1').textContent = `{{ calories }}/{{ user.daily_calories }} kcal`;
+                        document.querySelector('#calories progress').outerHTML = `<progress value="{{ calories }}" max="{{user.daily_calories}}"></progress>`
                     }
                 })
             })
