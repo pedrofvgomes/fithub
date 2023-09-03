@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect
+import json
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
@@ -8,9 +9,6 @@ from .models import User, FoodLog, WeightLog
 
 def index(request):
     return render(request, "fithub/index.html")
-
-def profile(request):
-    return redirect('index')
 
 def authentication(request):
     return render(request, "fithub/authentication.html")
@@ -50,3 +48,35 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+def edit_profile(request, user_id):
+    try:
+        user = User.objects.get(id = int(user_id))
+    except User.DoesNotExist:
+        return JsonResponse({"error":"User not found"}, status=404)
+    
+    if request.user != user:
+        return redirect('index')
+    
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+
+        if data.get('gender') is not None:
+            user.gender = data['gender'].capitalize()
+        
+        if data.get('age') is not None:
+            user.age = data['age']
+
+        if data.get('height') is not None:
+            user.height = data['height']
+
+        if data.get('starting_weight') is not None:
+            user.starting_weight = data['starting_weight']
+
+        user.save()
+
+        return HttpResponse(status=204)
+    
+    return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)

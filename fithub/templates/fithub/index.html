@@ -84,6 +84,31 @@
                     <p>Active since {{ user.date_joined|date:"d/m/Y"}}</p>
                     <button>Edit Profile</button>
                 </div>
+                <form id="edit-profile" onsubmit="event.preventDefault();">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <label for="gender">
+                        Gender
+                    </label>
+                    <select name="gender" id="gender">
+                        <option value="" hidden disabled selected></option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <label for="age">
+                        Age
+                    </label>
+                    <input type="number" name="age" id="age" step="1">
+                    <label for="height">
+                        Height (m)
+                    </label>
+                    <input type="number" name="height" id="height" step="0.01">
+                    <label for="starting_weight">
+                        Starting weight (kg)
+                    </label>
+                    <input type="number" name="starting_weight" id="starting_weight" step="0.1">
+                    <button>Save Profile</button>
+                </form>
                 <div id="nutritional-info">
                     <h2>Nutritional Info</h2>
                     <div>

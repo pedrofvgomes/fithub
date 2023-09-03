@@ -62,7 +62,7 @@ html, body{
     font-size: 30px;
     font-weight: 400;
 }
-.auth span, .auth input{
+.auth span, .auth input, #edit-profile input[type='number'], #edit-profile select{
     color: #4759ca;
 }
 .auth span{
@@ -70,14 +70,14 @@ html, body{
     margin-bottom: 5px;
     font-size: 15px;
 }
-.auth input{
+.auth input, #edit-profile input[type='number'], #edit-profile select{
     padding: 1em;
     border: solid 2px rgba(81, 81, 81, 0.5);
     border-radius: 20px;
     background-color: rgba(207, 207, 207, 0.5);
     font-size: 20px;
 }
-.auth input:focus{
+.auth input:focus, #edit-profile input[type='number']:focus, #edit-profile select:focus{
     outline: solid 2px rgba(71, 89, 202, 0.7);
     border: solid 2px rgba(71, 89, 202, 0.7);
 }
@@ -98,7 +98,7 @@ html, body{
     cursor: pointer;
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.4);;
 }
-.auth input:hover{
+.auth input:hover, #edit-profile input[type='number']:hover, #edit-profile select:hover{
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
 }
 .auth input::selection{
@@ -113,7 +113,7 @@ html, body{
     display: flex;
     flex-direction: row;
 }
-#food, #weight{
+#food, #weight, #profile-view{
     width: 40%;
     padding: 1.5em;
     background-color: rgba(255, 255, 255, 0.5);
@@ -177,7 +177,7 @@ progress::-webkit-progress-value {
     width: 100%;
     
 }
-#add-food, #authenticate, #profile-view button{
+#add-food, #authenticate, #profile-view button, #edit-profile input[type='submit']{
     background-color: #4759ca;
     margin: auto;
     border: none;
@@ -192,7 +192,7 @@ progress::-webkit-progress-value {
     transition: box-shadow ease-in-out 0.1s;
     margin: auto;
 }
-#add-food:hover, #authenticate:hover, #profile-view button:hover{
+#add-food:hover, #authenticate:hover, #profile-view button:hover, #edit-profile input[type='submit']{
     cursor: pointer;
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.4);
     transition: box-shadow ease-in-out 0.1s;
@@ -236,6 +236,9 @@ progress::-webkit-progress-value {
     margin-top: 0em;
     text-align: center;
 }
+#graph canvas{
+    margin: auto;
+}
 
 #profile:hover{
     cursor: pointer;
@@ -265,17 +268,13 @@ progress::-webkit-progress-value {
     position: absolute;
     width: 0;
     height: 0;
-    padding: 1.5em;
-    background-color: rgba(255, 255, 255, 0.8);
-    margin: auto;
-    border-radius: 30px;
-    box-shadow: 0px 0px 20px rgb(149, 149, 149);
-    transition: width ease-in-out 0.3s, height ease-in-out 0.3s, opacity ease-in-out 0.3s;
     left: 0;
-    bottom: 0;
-    top: 0;
     right: 0;
+    top: 0;
+    bottom: 0;
     margin: auto;
+    transition: width ease-in-out 0.2s, height ease-in-out 0.2s;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 #profile-view svg{
     position: absolute;
@@ -299,7 +298,7 @@ progress::-webkit-progress-value {
     color: #4759ca;
     font-weight: 700;
 }
-#profile-view button{
+#profile-view button, #edit-profile button{
     width: 50%;
 }
 #nutritional-info h2{
@@ -320,8 +319,33 @@ progress::-webkit-progress-value {
     grid-row: 4;
     grid-column-start: 1;
     grid-column-end: 3;
-    margin-top: 0.8em;
+    margin-top: 0.5em;
 }
 #profile-view svg:hover{
     cursor: pointer;
+}
+
+#edit-profile{
+    display: none;
+    flex-direction: column;
+    font-weight: 700;
+    text-align: center;
+}
+#edit-profile input, #edit-profile select{
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#edit-profile label{
+    color: #4759ca;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+}
+#edit-profile button{
+    margin-top: 1em;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
