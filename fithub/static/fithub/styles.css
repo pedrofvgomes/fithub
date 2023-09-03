@@ -62,7 +62,7 @@ html, body{
     font-size: 30px;
     font-weight: 400;
 }
-.auth span, .auth input, #edit-profile input[type='number'], #edit-profile select{
+.auth span, .auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select{
     color: #4759ca;
 }
 .auth span{
@@ -70,14 +70,14 @@ html, body{
     margin-bottom: 5px;
     font-size: 15px;
 }
-.auth input, #edit-profile input[type='number'], #edit-profile select{
+.auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select{
     padding: 1em;
     border: solid 2px rgba(81, 81, 81, 0.5);
     border-radius: 20px;
     background-color: rgba(207, 207, 207, 0.5);
     font-size: 20px;
 }
-.auth input:focus, #edit-profile input[type='number']:focus, #edit-profile select:focus{
+.auth input:focus, #edit-profile input[type='number']:focus, #edit-profile select:focus, #edit-nutrition select:focus{
     outline: solid 2px rgba(71, 89, 202, 0.7);
     border: solid 2px rgba(71, 89, 202, 0.7);
 }
@@ -98,7 +98,7 @@ html, body{
     cursor: pointer;
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.4);;
 }
-.auth input:hover, #edit-profile input[type='number']:hover, #edit-profile select:hover{
+.auth input:hover, #edit-profile input[type='number']:hover, #edit-profile select:hover, #edit-nutrition select:hover{
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
 }
 .auth input::selection{
@@ -276,7 +276,7 @@ progress::-webkit-progress-value {
     transition: width ease-in-out 0.2s, height ease-in-out 0.2s;
     background-color: rgba(255, 255, 255, 0.8);
 }
-#profile-view svg{
+#profile-view > svg{
     position: absolute;
     right: 1.5em;
 }
@@ -321,11 +321,29 @@ progress::-webkit-progress-value {
     grid-column-end: 3;
     margin-top: 0.5em;
 }
-#profile-view svg:hover{
+#profile-view > svg:hover{
     cursor: pointer;
 }
+#logout{
+    top: 1em;
+    left: 1em;
+    position: absolute;
+    width: fit-content;
+    padding: 0.5em;
+    background-color: #fa4d43;
+    border-radius: 50px;
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.25);
+}
+#logout:hover{
+    cursor: pointer;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4);
+}
+#logout svg{
+    margin-right: 5px;
+    margin-top: 5px;
+}
 
-#edit-profile{
+#edit-profile, #edit-nutrition{
     display: none;
     flex-direction: column;
     font-weight: 700;
@@ -336,10 +354,10 @@ progress::-webkit-progress-value {
     margin-left: auto;
     margin-right: auto;
 }
-#edit-profile label{
+#edit-profile label, #edit-nutrition label{
     color: #4759ca;
     margin-bottom: 0.5em;
-    margin-top: 1em;
+    margin-top: 0.5em;
 }
 #edit-profile button{
     margin-top: 1em;
@@ -348,4 +366,12 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+#edit-nutrition select:last-of-type{
+    margin-bottom: 1em;
+}
+#edit-nutrition select{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }

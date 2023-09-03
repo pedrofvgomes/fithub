@@ -7,6 +7,10 @@ class User(AbstractUser):
     current_weight = models.FloatField(default=0)
     height = models.FloatField(default=0)
     gender = models.CharField(max_length=50)
+    activity = models.CharField(max_length=100)
+    objective = models.CharField(max_length=100)
+    bmr = models.IntegerField(default=0)
+    daily_calories = models.IntegerField(default=0)
 
 class WeightLog(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)

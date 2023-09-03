@@ -111,3 +111,35 @@ def user_info(request, user_id):
     return JsonResponse({
             "error": "GET or PUT request required."
         }, status=400)
+
+def edit_nutrition(request, user_id):
+    try:
+        user = User.objects.get(id = int(user_id))
+    except User.DoesNotExist:
+        return JsonResponse({"error":"User not found"}, status=404)
+    
+    if request.user != user:
+        return redirect('index')
+    
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+
+        if data.get('objective') is not None:
+            user.objective = data['objective']
+        
+        if data.get('activity') is not None:
+            user.activity = data['activity']
+
+        if data.get('bmr') is not None:
+            user.bmr = data['bmr']
+
+        if data.get('daily_calories') is not None:
+            user.daily_calories = data['daily_calories']
+
+        user.save()
+
+        return HttpResponse(status=204)
+    
+    return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)

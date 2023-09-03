@@ -70,6 +70,12 @@
 
 
         <div id="profile-view">
+            <div id="logout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                  </svg>
+            </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
               </svg>
@@ -113,22 +119,49 @@
                     <h2>Nutritional Info</h2>
                     <div>
                     <p>Objective:</p>
-                    <p>Lose 0.5kg per week</p>
+                    <p>{{ user.objective }}</p>
                     </div>
                     <div>
                     <p>Basal Metabolic Rate:</p>
-                    <p>1839 kcal</p>
+                    <p>{{ user.bmr }}</p>
                     </div>
                     <div>
                     <p>Activity level:</p>
-                    <p>Exercise 1-3 times per week</p>
+                    <p>{{ user.activity }}</p>
                     </div>
                     <div>
                     <p>Daily caloric need:</p>
-                    <p>2528 kcal</p>
+                    <p>{{ user.daily_calories }}</p>
                     </div>
                     <button>Edit Nutritional Info</button>
                 </div>
+                <form id="edit-nutrition" onsubmit="event.preventDefault();">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <label for="objective">Objective</label>
+                    <select name="objective" id="objective">
+                        <option value="" disabled selected></option>
+                        <option value="1">Extreme weight loss (- 1kg/week)</option>
+                        <option value="2">Weight loss (- 0.5kg/week)</option>
+                        <option value="3">Mild weight loss (- 0.25kg/week)</option>
+                        <option value="4">Maintain weight</option>
+                        <option value="5">Mild weight gain (+ 0.25kg/week)</option>
+                        <option value="6">Weight gain (+ 0.5kg/week)</option>
+                        <option value="7">Extreme weight gain (+ 1kg/week)</option>
+                        
+                    </select>
+                    <label for="objective">Activity level</label>
+                    <select name="activity" id="activity">
+                        <option value="" disabled selected></option>
+                        <option value="1">Sedentary: little or no exercise</option>
+                        <option value="2">Exercise 1-3 times per week</option>
+                        <option value="3">Exercise 4-5 times per week</option>
+                        <option value="4">Daily exercise or intense exercise 3-4 times per week</option>
+                        <option value="5">Intense exercise 6-7 times per week</option>
+                        <option value="6">Very intense exercise daily, or physical job</option>
+                    </select>
+                    <button>Save Nutritional Info</button>
+                </form>
             </div>
         </div>
 
