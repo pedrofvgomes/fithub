@@ -132,25 +132,34 @@ document.addEventListener('DOMContentLoaded', function(){
             }
 
             let daily_calories = bmr;
-            switch(activity){
+            switch(parseInt(activity)){
                 case 1:
                     daily_calories *= 1.2;
+                    break;
                 case 2:
                     daily_calories *= 1.375;
+                    break;
                 case 3:
                     daily_calories *= 1.465;
+                    break;
                 case 4:
                     daily_calories *= 1.55;
+                    break;
                 case 5:
                     daily_calories *= 1.725;
+                    break;
                 case 6:
                     daily_calories *= 1.9;
+                    break;
                 default:
                     break;
             }
-            daily_calories = parseInt(objective) * 500 + parseInt(daily_calories) - 1500;
-            daily_calories = parseInt(daily_calories);
-            bmr = parseInt(bmr);
+            console.log(daily_calories);
+            daily_calories -= (4-objective)*250;
+            if (objective == 1) daily_calories-=250;
+            if (objective == 7) daily_calories+=250;
+            daily_calories = Math.round(daily_calories);
+            bmr = Math.round(bmr);
 
             fetch('edit_nutrition/' + String(user_id), {
                 method: 'PUT',
