@@ -67,16 +67,19 @@ def edit_profile(request, user_id):
     if request.method == 'PUT':
         data = json.loads(request.body)
 
-        if data.get('gender') is not None:
+        if not(data.get('gender') and data.get('age') and data.get('height') and data.get('starting_weight')):
+            return HttpResponse(status=200)
+
+        if data.get('gender') != "":
             user.gender = data['gender'].capitalize()
         
-        if data.get('age') is not None:
+        if data.get('age') != "":
             user.age = data['age']
 
-        if data.get('height') is not None:
+        if data.get('height') != "":
             user.height = data['height']
 
-        if data.get('starting_weight') is not None:
+        if data.get('starting_weight') != "":
             user.starting_weight = data['starting_weight']
             user.current_weight = data['starting_weight']
 
@@ -129,16 +132,19 @@ def edit_nutrition(request, user_id):
     if request.method == 'PUT':
         data = json.loads(request.body)
 
-        if data.get('objective') is not None:
+        if not(data.get('objective') and data.get('activity') and data.get('bmr') and data.get('daily_calories')):
+            return HttpResponse(status=200)
+
+        if data.get('objective') != "":
             user.objective = data['objective']
         
-        if data.get('activity') is not None:
+        if data.get('activity') != "":
             user.activity = data['activity']
 
-        if data.get('bmr') is not None:
+        if data.get('bmr') != "":
             user.bmr = data['bmr']
 
-        if data.get('daily_calories') is not None:
+        if data.get('daily_calories') != "":
             user.daily_calories = data['daily_calories']
 
         user.save()

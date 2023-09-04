@@ -239,10 +239,33 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.querySelector('#nutritional-info div:nth-of-type(3) p:nth-child(2)').textContent = activity_text;
                         document.querySelector('#nutritional-info div:nth-of-type(4) p:nth-child(2)').textContent = String(daily_calories);
 
-                        document.querySelector('#calories h1').textContent = `{{ calories }}/{{ user.daily_calories }} kcal`;
-                        document.querySelector('#calories progress').outerHTML = `<progress value="{{ calories }}" max="{{user.daily_calories}}"></progress>`
+                        location.reload();
                     }
                 })
             })
+    })
+
+    document.querySelector('#add-food').addEventListener('click', function(){
+        let food_log = document.querySelector('#food-log');
+        
+        food_log.style.opacity = '100%';
+        food_log.style.width = '600px';
+        food_log.style.height = '550px';
+        document.querySelector('#food').style.opacity = '30%';
+        document.querySelector('#weight').style.opacity = '30%';
+        document.querySelectorAll('#food-log  *').forEach(element => {
+            element.style.display = 'block';
+            if (element.id == 'search') element.style.display = 'flex';
+        });
+    })
+
+    document.querySelector('#food-log > svg').addEventListener('click', function () {
+        document.querySelectorAll('#food-log  *').forEach(element => {
+            element.style.display = 'none';
+        });
+        document.querySelector('#food-log').style.opacity = '0';
+        document.querySelector('#food-log').style.width = '0';
+        document.querySelector('#food').style.opacity = '100%';
+        document.querySelector('#weight').style.opacity = '100%';
     })
 })

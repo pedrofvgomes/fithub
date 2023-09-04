@@ -62,7 +62,7 @@ html, body{
     font-size: 30px;
     font-weight: 400;
 }
-.auth span, .auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select{
+.auth span, .auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select,  #food-log select{
     color: #4759ca;
 }
 .auth span{
@@ -70,14 +70,14 @@ html, body{
     margin-bottom: 5px;
     font-size: 15px;
 }
-.auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select{
+.auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select, #food-log select, #food-log input{
     padding: 1em;
     border: solid 2px rgba(81, 81, 81, 0.5);
     border-radius: 20px;
     background-color: rgba(207, 207, 207, 0.5);
     font-size: 20px;
 }
-.auth input:focus, #edit-profile input[type='number']:focus, #edit-profile select:focus, #edit-nutrition select:focus{
+.auth input:focus, #edit-profile input[type='number']:focus, #edit-profile select:focus, #edit-nutrition select:focus, #food-log select:focus, #food-log input:focus{
     outline: solid 2px rgba(71, 89, 202, 0.7);
     border: solid 2px rgba(71, 89, 202, 0.7);
 }
@@ -98,7 +98,7 @@ html, body{
     cursor: pointer;
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.4);;
 }
-.auth input:hover, #edit-profile input[type='number']:hover, #edit-profile select:hover, #edit-nutrition select:hover{
+.auth input:hover, #edit-profile input[type='number']:hover, #edit-profile select:hover, #edit-nutrition select:hover, #food-log select:hover, #food-log input:hover{
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
 }
 .auth input::selection{
@@ -113,7 +113,7 @@ html, body{
     display: flex;
     flex-direction: row;
 }
-#food, #weight, #profile-view{
+#food, #weight, #profile-view, #food-log{
     width: 40%;
     padding: 1.5em;
     background-color: rgba(255, 255, 255, 0.5);
@@ -177,7 +177,7 @@ progress::-webkit-progress-value {
     width: 100%;
     
 }
-#add-food, #authenticate, #profile-view button, #edit-profile input[type='submit']{
+#add-food, #authenticate, #profile-view button, #edit-profile input[type='submit'], #food-log button{
     background-color: #4759ca;
     margin: auto;
     border: none;
@@ -192,7 +192,7 @@ progress::-webkit-progress-value {
     transition: box-shadow ease-in-out 0.1s;
     margin: auto;
 }
-#add-food:hover, #authenticate:hover, #profile-view button:hover, #edit-profile input[type='submit']{
+#add-food:hover, #authenticate:hover, #profile-view button:hover, #edit-profile input[type='submit'], #food-log button:hover{
     cursor: pointer;
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.4);
     transition: box-shadow ease-in-out 0.1s;
@@ -260,10 +260,10 @@ progress::-webkit-progress-value {
     right: 3.5em;
 }
 
-#profile-view > *{
+#profile-view > *, #food-log > *{
     display: none;
 }
-#profile-view{
+#profile-view, #food-log{
     opacity: 0;
     position: absolute;
     width: 0;
@@ -276,11 +276,11 @@ progress::-webkit-progress-value {
     transition: width ease-in-out 0.2s, height ease-in-out 0.2s;
     background-color: rgba(255, 255, 255, 0.8);
 }
-#profile-view > svg{
+#profile-view > svg, #food-log > svg{
     position: absolute;
     right: 1.5em;
 }
-#profile-view h1{
+#profile-view h1, #food-log h1{
     margin-top: 0;
     font-size: 2.5em;
     color: #4759ca;
@@ -298,7 +298,7 @@ progress::-webkit-progress-value {
     color: #4759ca;
     font-weight: 700;
 }
-#profile-view button, #edit-profile button{
+#profile-view button, #edit-profile button, #food-log button{
     width: 50%;
 }
 #nutritional-info h2{
@@ -321,7 +321,7 @@ progress::-webkit-progress-value {
     grid-column-end: 3;
     margin-top: 0.5em;
 }
-#profile-view > svg:hover{
+#profile-view > svg:hover, #food-log > svg:hover{
     cursor: pointer;
 }
 #logout{
@@ -354,12 +354,12 @@ progress::-webkit-progress-value {
     font-weight: 700;
     text-align: center;
 }
-#edit-profile input, #edit-profile select{
-    width: 20%;
+#edit-profile input, #edit-profile select, #food-log input, #food-log select{
+    width: 25%;
     margin-left: auto;
     margin-right: auto;
 }
-#edit-profile label, #edit-nutrition label{
+#edit-profile label, #edit-nutrition label, #food-log label{
     color: #4759ca;
     margin-bottom: 0.5em;
     margin-top: 0.5em;
@@ -372,11 +372,47 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-#edit-nutrition select:last-of-type{
+#edit-nutrition select:last-of-type, #food-log select:last-of-type{
     margin-bottom: 1em;
 }
 #edit-nutrition select{
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#food-log{
+    text-align: center;
+    font-weight: 700;
+}
+#search{
+    display: flex;
+    flex-direction: row;
+}
+#search input{
+    width: 100%;
+    margin-top: 1em;
+    font-size: 1em;
+    color: #4759ca;
+    margin-bottom: 1em;
+}
+#search svg{
+    margin-right: 0;
+    margin-left: 1em;
+    margin-top: 2.1em;
+}
+#search-results{
+    background-color: rgba(207, 207, 207, 0.5);
+    height: 40%;
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.3) inset;
+    border: solid 2px rgba(81, 81, 81, 0.5);
+}
+label[for='search-results']{
+    text-align: left;
+    margin-bottom: 0em;
+    margin-top: 1em;
+}
+#food-log select{
+    font-size: 1em;
 }
