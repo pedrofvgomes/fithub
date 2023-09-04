@@ -199,7 +199,7 @@ def add_food(request, user_id):
     if request.method == 'POST':
         data = json.loads(request.body)
 
-        if not (data.get('name') and data.get('weight') and data.get('calories')):
+        if not (data.get('name') and data.get('weight') and data.get('calories') and data.get('meal')):
             return HttpResponse(status = 404)
         
         if data.get('name') != "":
@@ -217,7 +217,10 @@ def add_food(request, user_id):
             calories = data['calories']
             calories = float(calories.split(' ')[0])
 
-        food = FoodLog(user = user, name = name, weight = weight, calories = calories)
+        if data.get('meal') != "":
+            meal = data['meal']
+
+        food = FoodLog(user = user, name = name, weight = weight, calories = calories, meal = meal)
         food.save()
 
         return HttpResponse(status=204)

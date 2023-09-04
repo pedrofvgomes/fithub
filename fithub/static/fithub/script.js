@@ -281,6 +281,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let name = parent.querySelector(' span:nth-child(1)').textContent;
             let weight = parent.querySelector(' span:nth-child(2)').textContent;
             let calories = parent.querySelector(' span:nth-child(3)').textContent;
+            let meal_sel = document.querySelector("#meal");
+            let meal_text = meal_sel.options[meal_sel.selectedIndex].text;
             let user_id = document.querySelector('#edit-profile input[name="user_id"]').value;
             let csrfToken = document.querySelector("#food-log input[name='csrfmiddlewaretoken']").value;
 
@@ -295,7 +297,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({
                     name: name,
                     weight: weight,
-                    calories: calories
+                    calories: calories,
+                    meal : meal_text
                 })
             })
             .then(response => response.json())
