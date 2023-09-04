@@ -5,13 +5,27 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from django.urls import reverse
 from .models import User, FoodLog, WeightLog
-import datetime
+import datetime, pytz
 
 
 def index(request):
+    today = datetime.datetime.now()
+
+
+    # sum of calories
+    flogs = []
+    for log in FoodLog.objects.all():
+        if log.user == request.user and log.timestamp.day == today.day and log.timestamp.month == today.month and log.timestamp.year == today.year:
+            flogs.append(log)
+    calories = sum([l.calories for l in flogs])
+
     return render(request, "fithub/index.html", {
-        "calories" : 0,
-        "date" : datetime.datetime.now()
+        "calories" : round(calories),
+        "date" : today,
+        "breakfast" : [log for log in flogs if log.meal == 'Breakfast'],
+        "lunch" : [log for log in flogs if log.meal == 'Lunch'],
+        "dinner" : [log for log in flogs if log.meal == 'Dinner'],
+        "snacks" : [log for log in flogs if log.meal == 'Snacks'],
     })
 
 def authentication(request):
@@ -207,11 +221,6 @@ def add_food(request, user_id):
         
         if data.get('weight') != "":
             weight = data['weight']
-            w = ""
-            for char in weight:
-                if char.isnumeric():
-                    w += char
-            weight = float(w)
 
         if data.get('calories') != "":
             calories = data['calories']

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import datetime, pytz
 
 class User(AbstractUser):
     age = models.IntegerField(default=0)
@@ -15,15 +16,15 @@ class User(AbstractUser):
 class WeightLog(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     weight = models.FloatField()
-    date = models.DateField(auto_now_add=True)
+    timestamp = models.DateTimeField(default = datetime.datetime.now())
 
 class FoodLog(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     calories = models.FloatField(default=0)
-    weight = models.FloatField(default=0)
+    weight = models.CharField(max_length=100)
     meal = models.CharField(max_length=100)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(default = datetime.datetime.now())
 
 class NutritionalInfo(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)

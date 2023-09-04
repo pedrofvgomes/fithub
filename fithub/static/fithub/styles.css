@@ -399,7 +399,7 @@ progress::-webkit-progress-value {
 }
 #search-results{
     background-color: rgba(207, 207, 207, 0.5);
-    height: 40%;
+    height: 50%;
     border-radius: 10px;
     box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.3) inset;
     border: solid 2px rgba(81, 81, 81, 0.5);
@@ -441,6 +441,11 @@ label[for='search-results']{
     align-self: center;
     height: 100%;
     cursor: pointer;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 ::-webkit-scrollbar {

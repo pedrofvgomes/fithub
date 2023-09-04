@@ -286,8 +286,6 @@ document.addEventListener('DOMContentLoaded', function () {
             let user_id = document.querySelector('#edit-profile input[name="user_id"]').value;
             let csrfToken = document.querySelector("#food-log input[name='csrfmiddlewaretoken']").value;
 
-            console.log(name);
-
             fetch('/addfood/' + String(user_id), {
                 method: 'POST',
                 headers: {
@@ -298,15 +296,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     name: name,
                     weight: weight,
                     calories: calories,
-                    meal : meal_text
+                    meal: meal_text
                 })
-            })
-            .then(response => response.json())
-            .then(status => {
-                if(status == 204){
-                    console.log('success');
-                }
-            })
+            }).then(location.reload());
         })
     });
 
