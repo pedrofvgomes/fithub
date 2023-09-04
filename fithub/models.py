@@ -20,7 +20,8 @@ class WeightLog(models.Model):
 class FoodLog(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    calories = models.IntegerField()
+    calories = models.FloatField(default=0)
+    weight = models.FloatField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class NutritionalInfo(models.Model):

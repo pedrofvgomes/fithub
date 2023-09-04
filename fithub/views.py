@@ -127,13 +127,13 @@ def edit_nutrition(request, user_id):
         return JsonResponse({"error":"User not found"}, status=404)
     
     if request.user != user:
-        return redirect('index')
+        return HttpResponse(status=404)
     
     if request.method == 'PUT':
         data = json.loads(request.body)
 
         if not(data.get('objective') and data.get('activity') and data.get('bmr') and data.get('daily_calories')):
-            return HttpResponse(status=200)
+            return HttpResponse(status=404)
 
         if data.get('objective') != "":
             user.objective = data['objective']
@@ -160,10 +160,10 @@ def clear(request, user_id):
     try:
         user = User.objects.get(id = user_id)
     except User.DoesNotExist:
-        return redirect('index')
+        return HttpResponse(status=404)
 
     if request.user != user:
-        return redirect('index')
+        return HttpResponse(status=404)
     
     user.age = 0
     user.starting_weight = 0
@@ -185,3 +185,41 @@ def clear(request, user_id):
         i.delete()
     
     return redirect('index')
+
+
+def add_food(request, user_id):
+    try:
+        user = User.objects.get(id = user_id)
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.user != user:
+        return HttpResponse(status=404)
+    
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        if not (data.get('name') and data.get('weight') and data.get('calories')):
+            return HttpResponse(status = 404)
+        
+        if data.get('name') != "":
+            name = data['name']
+        
+        if data.get('weight') != "":
+            weight = data['weight']
+            w = ""
+            for char in weight:
+                if char.isnumeric():
+                    w += char
+            weight = float(w)
+
+        if data.get('calories') != "":
+            calories = data['calories']
+            calories = float(calories.split(' ')[0])
+
+        food = FoodLog(user = user, name = name, weight = weight, calories = calories)
+        food.save()
+
+        return HttpResponse(status=204)
+
+    return HttpResponse(status=404)

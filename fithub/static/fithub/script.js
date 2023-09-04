@@ -246,9 +246,9 @@ document.addEventListener('DOMContentLoaded', function () {
             })
     })
 
-    document.querySelector('#add-food').addEventListener('click', function(){
+    document.querySelector('#add-food').addEventListener('click', function () {
         let food_log = document.querySelector('#food-log');
-        
+
         food_log.style.opacity = '100%';
         food_log.style.width = '600px';
         food_log.style.height = '550px';
@@ -270,4 +270,43 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#food').style.opacity = '100%';
         document.querySelector('#weight').style.opacity = '100%';
     })
+
+
+
+    // add food
+    let plus = document.querySelectorAll('#search-results > .food > svg');
+    plus.forEach(element => {
+        element.addEventListener('click', function () {
+            let parent = element.parentElement;
+            let name = parent.querySelector(' span:nth-child(1)').textContent;
+            let weight = parent.querySelector(' span:nth-child(2)').textContent;
+            let calories = parent.querySelector(' span:nth-child(3)').textContent;
+            let user_id = document.querySelector('#edit-profile input[name="user_id"]').value;
+            let csrfToken = document.querySelector("#food-log input[name='csrfmiddlewaretoken']").value;
+
+            console.log(name);
+
+            fetch('/addfood/' + String(user_id), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({
+                    name: name,
+                    weight: weight,
+                    calories: calories
+                })
+            })
+            .then(response => response.json())
+            .then(status => {
+                if(status == 204){
+                    console.log('success');
+                }
+            })
+        })
+    });
+
+
+    // remove food
 })
