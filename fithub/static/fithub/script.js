@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.querySelector('#profile-view').style.opacity = '0';
         document.querySelector('#profile-view').style.width = '0';
+        document.querySelector('#profile-view').style.height = '0';
         document.querySelector('#food').style.opacity = '100%';
         document.querySelector('#weight').style.opacity = '100%';
     })
@@ -255,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#weight').style.opacity = '30%';
         document.querySelectorAll('#food-log  *').forEach(element => {
             element.style.display = 'block';
-            if (element.id == 'search') element.style.display = 'flex';
+            if (element.id == 'search' || element.classList.contains('food')) element.style.display = 'flex';
         });
     })
 
@@ -265,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.querySelector('#food-log').style.opacity = '0';
         document.querySelector('#food-log').style.width = '0';
+        document.querySelector('#food-log').style.height = '0';
         document.querySelector('#food').style.opacity = '100%';
         document.querySelector('#weight').style.opacity = '100%';
     })
