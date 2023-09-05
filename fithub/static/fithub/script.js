@@ -4,46 +4,48 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     document.querySelector('#profile').addEventListener('click', function () {
-        document.querySelector('#profile-view').style.opacity = '100%';
-        document.querySelector('#profile-view').style.width = '600px';
-        document.querySelector('#profile-view').style.height = '550px';
-        document.querySelector('#food').style.opacity = '30%';
-        document.querySelector('#weight').style.opacity = '30%';
-        document.querySelector('#edit-profile').style.display = 'none';
-        document.querySelector('#edit-nutrition').style.display = 'none';
-        document.querySelector('#profile-info').style.display = 'block';
-        document.querySelector('#nutritional-info').style.display = 'grid';
-        document.querySelectorAll('#profile-view > *').forEach(element => {
-            element.style.display = 'block';
-        });
+        if(document.querySelector('#food-log').style.width == 0 || document.querySelector('#food-log').style.width == '0px'){
+            document.querySelector('#profile-view').style.opacity = '100%';
+            document.querySelector('#profile-view').style.width = '600px';
+            document.querySelector('#profile-view').style.height = '550px';
+            document.querySelector('#food').style.opacity = '30%';
+            document.querySelector('#weight').style.opacity = '30%';
+            document.querySelector('#edit-profile').style.display = 'none';
+            document.querySelector('#edit-nutrition').style.display = 'none';
+            document.querySelector('#profile-info').style.display = 'block';
+            document.querySelector('#nutritional-info').style.display = 'grid';
+            document.querySelectorAll('#profile-view > *').forEach(element => {
+                element.style.display = 'block';
+            });
 
-        let user_id = document.querySelector('#profile-info button').id;
-        fetch('user/' + String(user_id))
-            .then(response => response.json())
-            .then(data => {
-                age = data.age;
-                objective = data.objective;
-                if (age == 0) {
-                    let profile_info = document.querySelector('#profile-info');
-                    let nutritional_info = document.querySelector('#nutritional-info');
-                    profile_info.style.display = 'none';
-                    nutritional_info.style.display = 'none';
-                    document.querySelector('#edit-profile').style.display = 'flex';
-                }
-                else if (objective === '') {
-                    document.querySelector('#nutritional-info').style.display = 'none';
-                    document.querySelector('#edit-nutrition').style.display = 'flex';
-                    document.querySelector('#edit-nutrition').style.flexDirection = 'column';
-                }
-            })
+            let user_id = document.querySelector('#profile-info button').id;
+            fetch('user/' + String(user_id))
+                .then(response => response.json())
+                .then(data => {
+                    age = data.age;
+                    objective = data.objective;
+                    if (age == 0) {
+                        let profile_info = document.querySelector('#profile-info');
+                        let nutritional_info = document.querySelector('#nutritional-info');
+                        profile_info.style.display = 'none';
+                        nutritional_info.style.display = 'none';
+                        document.querySelector('#edit-profile').style.display = 'flex';
+                    }
+                    else if (objective === '') {
+                        document.querySelector('#nutritional-info').style.display = 'none';
+                        document.querySelector('#edit-nutrition').style.display = 'flex';
+                        document.querySelector('#edit-nutrition').style.flexDirection = 'column';
+                    }
+                })
 
-        let age = document.querySelector('#profile-info p:nth-child(2)').textContent;
-        if (age[0] === '0') {
-            let profile_info = document.querySelector('#profile-info');
-            let nutritional_info = document.querySelector('#nutritional-info');
-            profile_info.style.display = 'none';
-            nutritional_info.style.display = 'none';
-            document.querySelector('#edit-profile').style.display = 'flex';
+            let age = document.querySelector('#profile-info p:nth-child(2)').textContent;
+            if (age[0] === '0') {
+                let profile_info = document.querySelector('#profile-info');
+                let nutritional_info = document.querySelector('#nutritional-info');
+                profile_info.style.display = 'none';
+                nutritional_info.style.display = 'none';
+                document.querySelector('#edit-profile').style.display = 'flex';
+            }
         }
     })
     document.querySelector('#profile-view > svg').addEventListener('click', function () {
@@ -247,18 +249,20 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     document.querySelector('#add-food').addEventListener('click', function () {
-        let food_log = document.querySelector('#food-log');
+        if(document.querySelector('#profile-view').style.width == 0 || document.querySelector('#profile-view').style.width == '0px'){
+            let food_log = document.querySelector('#food-log');
 
-        food_log.style.opacity = '100%';
-        food_log.style.width = '600px';
-        food_log.style.height = '550px';
-        document.querySelector('#food').style.opacity = '30%';
-        document.querySelector('#weight').style.opacity = '30%';
-        document.querySelector('label[for="search-results"]').textContent = 'Most frequent foods';
-        document.querySelectorAll('#food-log  *').forEach(element => {
-            element.style.display = 'block';
-            if (element.id == 'search' || element.classList.contains('food')) element.style.display = 'flex';
-        });
+            food_log.style.opacity = '100%';
+            food_log.style.width = '600px';
+            food_log.style.height = '550px';
+            document.querySelector('#food').style.opacity = '30%';
+            document.querySelector('#weight').style.opacity = '30%';
+            document.querySelector('label[for="search-results"]').textContent = 'Most frequent foods';
+            document.querySelectorAll('#food-log  *').forEach(element => {
+                element.style.display = 'block';
+                if (element.id == 'search' || element.classList.contains('food')) element.style.display = 'flex';
+            });
+        } 
     })
 
     document.querySelector('#food-log > svg').addEventListener('click', function () {
