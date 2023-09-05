@@ -13,7 +13,7 @@
             <div id="calories">
                 <h2>{{ date|date:"F jS" }}</h2>
                 <h1>{{ calories }} / {{ user.daily_calories }} kcal</h1>
-                <progress value="{{ calories }}" max="{{user.daily_calories}}"></progress>
+                <progress value="{{ calories }}" max="{{user.daily_calories}}" class="blue"></progress>
             </div>
 
             <ul id="logs">

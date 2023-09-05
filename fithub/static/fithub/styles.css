@@ -166,10 +166,15 @@ progress::-webkit-progress-bar {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 progress::-webkit-progress-value {
-    background-color: #4759ca;
     border-radius: 30px; 
     background-size: 35px 20px, 100% 100%, 100% 100%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+progress.blue::-webkit-progress-value{
+    background-color: #4759ca;
+}
+progress.red::-webkit-progress-value{
+    background-color: #fa4d43;
 }
 #logs{
     overflow-y: scroll;

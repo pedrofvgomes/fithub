@@ -348,6 +348,17 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         })
     })
+
+
+    let a = document.querySelector('progress').value;
+    let b = document.querySelector('progress').max;
+
+    if(parseInt(a)==parseInt(b)){
+        document.querySelector('progress').classList.add('red');
+    }
+    else if(document.querySelector('progress').classList.contains('red')){
+        document.querySelector('progress').classList.remove('red');
+    }
 })
 
 
