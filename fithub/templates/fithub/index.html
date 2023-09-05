@@ -19,7 +19,7 @@
             <ul id="logs">
                 <h2 class="meal-title">Breakfast</h2>
                     {% for food in breakfast %}
-                    <li class="food">
+                    <li class="food" id="{{ food.id }}">
                         <span>{{ food.name }}</span>
                         <span>{{ food.weight }}</span>
                         <span>{{ food.calories }} kcal</span>
@@ -35,7 +35,7 @@
 
                 <h2 class="meal-title">Lunch</h2>
                     {% for food in lunch %}
-                    <li class="food">
+                    <li class="food" id="{{ food.id }}">
                         <span>{{ food.name }}</span>
                         <span>{{ food.weight }}</span>
                         <span>{{ food.calories }} kcal</span>
@@ -51,7 +51,7 @@
 
                 <h2 class="meal-title">Dinner</h2>
                     {% for food in dinner %}
-                    <li class="food">
+                    <li class="food" id="{{ food.id }}">
                         <span>{{ food.name }}</span>
                         <span>{{ food.weight }}</span>
                         <span>{{ food.calories }} kcal</span>
@@ -67,7 +67,7 @@
 
                 <h2 class="meal-title">Snacks</h2>
                     {% for food in snacks %}
-                    <li class="food">
+                    <li class="food" id="{{ food.id }}">
                         <span>{{ food.name }}</span>
                         <span>{{ food.weight }}</span>
                         <span>{{ food.calories }} kcal</span>

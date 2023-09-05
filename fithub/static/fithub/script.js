@@ -304,4 +304,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // remove food
+    let minus = document.querySelectorAll('#logs > .food > svg');
+    minus.forEach(element => {
+        element.addEventListener('click', function(){
+            let parent = element.parentElement;
+            window.location.href = 'removefood/' + String(parent.id);    
+        })
+    });
 })

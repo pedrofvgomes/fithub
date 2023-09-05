@@ -235,3 +235,17 @@ def add_food(request, user_id):
         return HttpResponse(status=204)
 
     return HttpResponse(status=404)
+
+
+def remove_food(request, log_id):
+    try:
+        log = FoodLog.objects.get(id = log_id)
+    except FoodLog.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.user != log.user:
+        return HttpResponse(status=404)
+    
+    log.delete()
+
+    return redirect('index')
