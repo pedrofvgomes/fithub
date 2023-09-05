@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
         food_log.style.height = '550px';
         document.querySelector('#food').style.opacity = '30%';
         document.querySelector('#weight').style.opacity = '30%';
+        document.querySelector('label[for="search-results"]').textContent = 'Most frequent foods';
         document.querySelectorAll('#food-log  *').forEach(element => {
             element.style.display = 'block';
             if (element.id == 'search' || element.classList.contains('food')) element.style.display = 'flex';
@@ -269,38 +270,10 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#food-log').style.height = '0';
         document.querySelector('#food').style.opacity = '100%';
         document.querySelector('#weight').style.opacity = '100%';
+        document.querySelector('#search-results').innerHTML = '';
+        document.querySelector('input[name="food-name"]').value = "";
     })
 
-
-
-    // add food
-    let plus = document.querySelectorAll('#search-results > .food > svg');
-    plus.forEach(element => {
-        element.addEventListener('click', function () {
-            let parent = element.parentElement;
-            let name = parent.querySelector(' span:nth-child(1)').textContent;
-            let weight = parent.querySelector(' span:nth-child(2)').textContent;
-            let calories = parent.querySelector(' span:nth-child(3)').textContent;
-            let meal_sel = document.querySelector("#meal");
-            let meal_text = meal_sel.options[meal_sel.selectedIndex].text;
-            let user_id = document.querySelector('#edit-profile input[name="user_id"]').value;
-            let csrfToken = document.querySelector("#food-log input[name='csrfmiddlewaretoken']").value;
-
-            fetch('/addfood/' + String(user_id), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                },
-                body: JSON.stringify({
-                    name: name,
-                    weight: weight,
-                    calories: calories,
-                    meal: meal_text
-                })
-            }).then(location.reload());
-        })
-    });
 
 
     // remove food
@@ -311,4 +284,90 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = 'removefood/' + String(parent.id);    
         })
     });
+
+
+    // api search
+    document.querySelector('#search > svg').addEventListener('click', function(){
+        document.querySelector('#search-results').innerHTML = '';
+
+        let query = document.querySelector('#search input').value;
+        document.querySelector('label[for="search-results"]').textContent = `Search results for "${query}"`;
+        const key = `2uUmEmCJlenbUg3SUf9CLgJlWN9jD3HLlzVocZ6s`;
+        const endpoint = `https://api.nal.usda.gov/fdc/v1/foods/search?`;
+        
+        let url = `${endpoint}query=${encodeURIComponent(query)}&limit=10&api_key=${key}`;
+        console.log(url);
+        fetch(url)
+        .then(response => {
+            if(!response.ok)
+                throw new Error(`API request failed with status: ${response.status}`);
+            return response.json();
+        })
+        .then(data =>{
+            const results = data.foods.slice(10);
+
+            let counter = 0;
+
+            console.log('Search results:');
+            results.forEach(food => {
+                let cals = 0;
+                let name = "";
+
+                let f = document.createElement('li');
+                f.classList.add('food');
+
+                food.foodNutrients.forEach(nutrient => {
+                    name = food.description;
+                    if (nutrient.nutrientId == 1008)
+                        cals = nutrient.value;
+                });
+
+                f.innerHTML = `
+                    <span>${name}</span>
+                    <span>50g</span>
+                    <span>${cals} kcal</span>
+                    <svg onclick="addFood(this)" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                `;
+                if (counter < 15)
+                    document.querySelector('#search-results').appendChild(f);
+                counter++;
+            });
+
+            if (counter == 0){
+                document.querySelector('#search-results').innerHTML = '<h2 class="unavailable">No results...</h2>';
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+    })
 })
+
+
+function addFood(element){
+    let parent = element.parentElement;
+    let name = parent.querySelector(' span:nth-child(1)').textContent;
+    let weight = parent.querySelector(' span:nth-child(2)').textContent;
+    let calories = parent.querySelector(' span:nth-child(3)').textContent;
+    let meal_sel = document.querySelector("#meal");
+    let meal_text = meal_sel.options[meal_sel.selectedIndex].text;
+    let user_id = document.querySelector('#edit-profile input[name="user_id"]').value;
+    let csrfToken = document.querySelector("#food-log input[name='csrfmiddlewaretoken']").value;
+
+    fetch('/addfood/' + String(user_id), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({
+            name: name,
+            weight: weight,
+            calories: calories,
+            meal: meal_text
+        })
+    }).then(location.reload());
+}

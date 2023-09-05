@@ -392,11 +392,15 @@ progress::-webkit-progress-value {
     font-size: 1em;
     color: #4759ca;
     margin-bottom: 1em;
+    font-weight: 700;
 }
 #search svg{
     margin-right: 0;
     margin-left: 1em;
     margin-top: 2.1em;
+}
+#search svg:hover{
+    cursor: pointer;
 }
 #search-results, #logs{
     background-color: rgba(207, 207, 207, 0.5);
@@ -493,13 +497,13 @@ input[type=number]::-webkit-outer-spin-button {
 #logs .food:last-of-type{
     margin-bottom: 0;
 }
-.meal-title, #logs .unavailable{
+.meal-title, #logs .unavailable, #search-results .unavailable{
     text-align: center;
     font-size: 1em;
     margin-bottom: 0.5em;
     color: #4759ca;
 }
-#logs .unavailable{
+#logs .unavailable, #search-results .unavailable{
     width: 20%;
     margin: auto;
     padding: 0.2em;
@@ -507,4 +511,12 @@ input[type=number]::-webkit-outer-spin-button {
     color: white;
     box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.1);
     background-color: #fa4d43;
+}
+#search-results .unavailable{
+    margin-top: 2em;
+}
+
+#search-results .food :first-child, #logs .food :first-child{
+    text-align: left;
+    width: 50%;
 }
