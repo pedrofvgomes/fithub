@@ -70,7 +70,7 @@ html, body{
     margin-bottom: 5px;
     font-size: 15px;
 }
-.auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select, #food-log select, #food-log input{
+.auth input, #edit-profile input[type='number'], #edit-profile select, #edit-nutrition select, #food-log select, #food-log input, #weight input{
     padding: 1em;
     border: solid 2px rgba(81, 81, 81, 0.5);
     border-radius: 20px;
@@ -183,7 +183,7 @@ progress.red::-webkit-progress-value{
     width: 100%;
     
 }
-#add-food, #authenticate, #profile-view button, #edit-profile input[type='submit'], #food-log button{
+#add-food, #authenticate, #profile-view button, #edit-profile input[type='submit'], #food-log button, #weight button{
     background-color: #4759ca;
     margin: auto;
     border: none;
@@ -198,19 +198,14 @@ progress.red::-webkit-progress-value{
     transition: box-shadow ease-in-out 0.1s;
     margin: auto;
 }
-#add-food:hover, #authenticate:hover, #profile-view button:hover, #edit-profile input[type='submit'], #food-log button:hover{
+#add-food:hover, #authenticate:hover, #profile-view button:hover, #edit-profile input[type='submit'], #food-log button:hover, #weight button:hover{
     cursor: pointer;
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.4);
     transition: box-shadow ease-in-out 0.1s;
 }
 
 
-#weight hr{
-    height: 2px;
-    background-color: rgba(71, 89, 202, 0.2);
-    border: none;
-    border-radius: 25px;
-}
+
 #weight-info{
     display: flex;  
     flex-direction: row;
@@ -219,7 +214,7 @@ progress.red::-webkit-progress-value{
     font-weight: 700;
     font-size: 2em;
     margin: 0;
-    margin-top: 0.1em;
+    margin-top: 0.5em;
 }
 #weight-info h1{
     font-weight: 800;
@@ -239,11 +234,12 @@ progress.red::-webkit-progress-value{
     font-size: 2em;
     color: #4759ca;
     margin-bottom: 0;
-    margin-top: 0em;
+    margin-top: 1em;
     text-align: center;
 }
 #graph canvas{
     margin: auto;
+    margin-bottom: 2em;
 }
 
 #profile:hover{
@@ -525,10 +521,26 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: left;
     width: 50%;
 }
-#search-results .food input{
+#search-results .food input, #weight input{
     padding: 0.5em;
     width: 3em;
     font-size: 1em;
     margin-right: 0.5em;
     text-align: center;
+}
+
+#weight-info button{
+    width: 20%;
+    margin-left: 1em;
+    margin-right: 0;
+}
+#weight-info input{
+    margin-right: 0;
+    margin-left: 2.5em;
+    padding: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    width: 15%;
+    font-size: 1em;
+    font-weight: 700;
 }

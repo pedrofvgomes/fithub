@@ -11,6 +11,34 @@ import datetime, pytz
 def index(request):
     today = datetime.datetime.now()
 
+    # most recent weight log
+    id = sorted([log.id for log in WeightLog.objects.filter(user= request.user)])
+    if len(id) > 0:
+        id = id[-1]
+    else:
+        id = 0
+    lasttimestamp = WeightLog.objects.filter(user = request.user, id = id)
+    if len(lasttimestamp) != 0:
+        weight = lasttimestamp[0].weight
+        newweightlog = False
+    else:
+        newweightlog = True
+        weight = 0
+        percentage = 0
+    if not newweightlog:
+        diff = datetime.datetime.now() - lasttimestamp[0].timestamp.replace(tzinfo=None)
+        newweightlog = diff.days >= 7
+
+        # percentage lost
+        start = request.user.starting_weight
+        current = request.user.current_weight
+        percentage = (current-start)/start * 100
+        if percentage >= 0:
+            percentage = "+ " + "{:.2f}".format(percentage) + '%'
+        else: 
+            percentage = "- " + ("{:.2f}".format(percentage))[1:] + '%'
+
+
 
     # sum of calories
     flogs = []
@@ -19,6 +47,7 @@ def index(request):
             flogs.append(log)
     calories = sum([l.calories for l in flogs])
 
+
     return render(request, "fithub/index.html", {
         "calories" : round(calories),
         "date" : today,
@@ -26,8 +55,11 @@ def index(request):
         "lunch" : [log for log in flogs if log.meal == 'Lunch'],
         "dinner" : [log for log in flogs if log.meal == 'Dinner'],
         "snacks" : [log for log in flogs if log.meal == 'Snacks'],
+        "newweightlog" : newweightlog,
+        "weight" : weight,
+        "percentage" : percentage,
+        "remove" : len(WeightLog.objects.filter(user = request.user))
     })
-
 def authentication(request):
     return render(request, "fithub/authentication.html")
 
@@ -98,6 +130,9 @@ def edit_profile(request, user_id):
             user.current_weight = data['starting_weight']
 
         user.save()
+
+        log = WeightLog(user = user, weight = data['starting_weight'])
+        log.save()
 
         return HttpResponse(status=204)
     
@@ -249,3 +284,34 @@ def remove_food(request, log_id):
     log.delete()
 
     return redirect('index')
+
+
+def add_weight(request, user_id, weight):
+    try:
+        user = User.objects.get(id = user_id)
+    except User.DoesNotExist:
+        return redirect('index')
+
+    if request.user != user or request.user.starting_weight == 0:
+        print('o')
+        return redirect('index')
+    
+    WeightLog(user = user, weight = float(weight)).save()
+
+    return redirect('index')   
+
+
+def remove_weight(request, user_id):
+    try:
+        user = User.objects.get(id = user_id)
+    except User.DoesNotExist:
+        return redirect('index')
+
+    if request.user != user:
+        return redirect('index')
+    
+    id = sorted([log.id for log in WeightLog.objects.filter(user= request.user)])[-1]
+    lastlog = WeightLog.objects.get(user = request.user, id = id)
+    lastlog.delete()
+
+    return redirect('index')   

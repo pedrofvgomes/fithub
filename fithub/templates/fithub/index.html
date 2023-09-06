@@ -1,270 +1,308 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <title>FitHub</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale = 1">
-        <link rel="stylesheet" href="../../static/fithub/styles.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-        <script src="../../static/fithub/script.js"></script>
-    </head>
-    <body id="mainpage">
-        <div id="food">
-            <div id="calories">
-                <h2>{{ date|date:"F jS" }}</h2>
-                <h1>{{ calories }} / {{ user.daily_calories }} kcal</h1>
-                <progress value="{{ calories }}" max="{{user.daily_calories}}" class="blue"></progress>
-            </div>
 
-            <ul id="logs">
-                <h2 class="meal-title">Breakfast</h2>
-                    {% for food in breakfast %}
-                    <li class="food" id="{{ food.id }}">
-                        <span>{{ food.name }}</span>
-                        <span>{{ food.weight }}</span>
-                        <span>{{ food.calories }} kcal</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                          </svg>
-                    </li>
-                    {% endfor %}
-                    {% if breakfast|length == 0 %}
-                    <h2 class="unavailable">Still nothing...</h2>
-                    {% endif %}
+<head>
+    <title>FitHub</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1">
+    <link rel="stylesheet" href="../../static/fithub/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="../../static/fithub/script.js"></script>
+</head>
 
-                <h2 class="meal-title">Lunch</h2>
-                    {% for food in lunch %}
-                    <li class="food" id="{{ food.id }}">
-                        <span>{{ food.name }}</span>
-                        <span>{{ food.weight }}</span>
-                        <span>{{ food.calories }} kcal</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                          </svg>
-                    </li>
-                    {% endfor %}
-                    {% if lunch|length == 0 %}
-                    <h2 class="unavailable">Still nothing...</h2>
-                    {% endif %}
-
-                <h2 class="meal-title">Dinner</h2>
-                    {% for food in dinner %}
-                    <li class="food" id="{{ food.id }}">
-                        <span>{{ food.name }}</span>
-                        <span>{{ food.weight }}</span>
-                        <span>{{ food.calories }} kcal</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                          </svg>
-                    </li>
-                    {% endfor %}
-                    {% if dinner|length == 0 %}
-                    <h2 class="unavailable">Still nothing...</h2>
-                    {% endif %}
-
-                <h2 class="meal-title">Snacks</h2>
-                    {% for food in snacks %}
-                    <li class="food" id="{{ food.id }}">
-                        <span>{{ food.name }}</span>
-                        <span>{{ food.weight }}</span>
-                        <span>{{ food.calories }} kcal</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                          </svg>
-                    </li>
-                    {% endfor %}          
-                    {% if snacks|length == 0 %}
-                    <h2 class="unavailable">Still nothing...</h2>
-                    {% endif %}
-            </ul>
-
-            <button id="add-food">Add Food</button>
+<body id="mainpage">
+    <div id="food">
+        <div id="calories">
+            <h2>{{ date|date:"F jS" }}</h2>
+            <h1>{{ calories }} / {{ user.daily_calories }} kcal</h1>
+            <progress value="{{ calories }}" max="{{user.daily_calories}}" class="blue"></progress>
         </div>
 
-        <div id="weight">
-            <div id="weight-info">
-                <h2>This week's weight: </h2>
-                <h1>81.3kg</h1>
-                <span>(-5.3%)</span>
-            </div>
-            <hr>
-            <div id="graph">
-                <h2>Weight Evolution</h2>
-                <canvas id="weightchart" style="width: 100%; max-width: 600px;"></canvas>
-            </div>
-        </div>
+        <ul id="logs">
+            <h2 class="meal-title">Breakfast</h2>
+            {% for food in breakfast %}
+            <li class="food" id="{{ food.id }}">
+                <span>{{ food.name }}</span>
+                <span>{{ food.weight }}</span>
+                <span>{{ food.calories }} kcal</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-dash-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                </svg>
+            </li>
+            {% endfor %}
+            {% if breakfast|length == 0 %}
+            <h2 class="unavailable">Still nothing...</h2>
+            {% endif %}
 
-        {% if user.is_authenticated %}
-        <div id="profile">
-            <span>{{ user.username }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#4759ca" class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-              </svg>
+            <h2 class="meal-title">Lunch</h2>
+            {% for food in lunch %}
+            <li class="food" id="{{ food.id }}">
+                <span>{{ food.name }}</span>
+                <span>{{ food.weight }}</span>
+                <span>{{ food.calories }} kcal</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-dash-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                </svg>
+            </li>
+            {% endfor %}
+            {% if lunch|length == 0 %}
+            <h2 class="unavailable">Still nothing...</h2>
+            {% endif %}
+
+            <h2 class="meal-title">Dinner</h2>
+            {% for food in dinner %}
+            <li class="food" id="{{ food.id }}">
+                <span>{{ food.name }}</span>
+                <span>{{ food.weight }}</span>
+                <span>{{ food.calories }} kcal</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-dash-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                </svg>
+            </li>
+            {% endfor %}
+            {% if dinner|length == 0 %}
+            <h2 class="unavailable">Still nothing...</h2>
+            {% endif %}
+
+            <h2 class="meal-title">Snacks</h2>
+            {% for food in snacks %}
+            <li class="food" id="{{ food.id }}">
+                <span>{{ food.name }}</span>
+                <span>{{ food.weight }}</span>
+                <span>{{ food.calories }} kcal</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-dash-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                </svg>
+            </li>
+            {% endfor %}
+            {% if snacks|length == 0 %}
+            <h2 class="unavailable">Still nothing...</h2>
+            {% endif %}
+        </ul>
+
+        <button id="add-food">Add Food</button>
+    </div>
+
+    <div id="weight">
+        <div id="weight-info">
+            <h2>This week's weight: </h2>
+            {% if newweightlog %}
+            <input type="number" placeholder="weight (kg)">
+            <button onclick="addWeight();">Add weight</button>
+            {% else %}
+            <h1>{{ weight }} kg</h1>
+            <span>({{ percentage }})</span>
+            {% endif %}
         </div>
-        {% else %}
-        <button id="authenticate" onclick="window.location.href = '/authentication'">
-            Authenticate
-        </button>
+        <div id="graph">
+            <h2>Weight Evolution</h2>
+            <canvas id="weightchart" style="width: 100%; max-width: 600px;"></canvas>
+        </div>
+        {% if remove %}
+        <button onclick="removeWeight();">Remove Last Weight</button>
         {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <div id="profile">
+        <span>{{ user.username }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#4759ca" class="bi bi-person-circle"
+            viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </svg>
+    </div>
+    {% else %}
+    <button id="authenticate" onclick="window.location.href = '/authentication'">
+        Authenticate
+    </button>
+    {% endif %}
 
 
-        <div id="profile-view">
-            <div id="logout">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                  </svg>
+    <div id="profile-view">
+        <div id="logout">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-box-arrow-left"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                <path fill-rule="evenodd"
+                    d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+            </svg>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x"
+            viewBox="0 0 16 16">
+            <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+        <h1>{{user.username}}</h1>
+        <div id="info">
+            <div id="profile-info">
+                <p>{{ user.gender }}</p>
+                <p>{{ user.age }} years old</p>
+                <p>Height: <span>{{ user.height }} m</span></p>
+                <p>Starting weight: <span>{{ user.starting_weight }} kg</span></p>
+                <p>Current weight: <span>{{ user.current_weight }} kg</span></p>
+                <p>Active since {{ user.date_joined|date:"d/m/Y"}}</p>
+                <button id="{{user.id}}">Clear data</button>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            <h1>{{user.username}}</h1>
-            <div id="info">
-                <div id="profile-info">
-                    <p>{{ user.gender }}</p>
-                    <p>{{ user.age }} years old</p>
-                    <p>Height: <span>{{ user.height }} m</span></p>
-                    <p>Starting weight: <span>{{ user.starting_weight }} kg</span></p>
-                    <p>Current weight: <span>{{ user.current_weight }} kg</span></p>
-                    <p>Active since {{ user.date_joined|date:"d/m/Y"}}</p>
-                    <button id="{{user.id}}">Clear data</button>
-                </div>
-                <form id="edit-profile" onsubmit="event.preventDefault();">
-                    {% csrf_token %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    <label for="gender">
-                        Gender
-                    </label>
-                    <select name="gender" id="gender">
-                        <option value="" hidden disabled selected></option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                    <label for="age">
-                        Age
-                    </label>
-                    <input type="number" name="age" id="age" step="1" autocomplete="off">
-                    <label for="height">
-                        Height (m)
-                    </label>
-                    <input type="number" name="height" id="height" step="0.01" autocomplete="off">
-                    <label for="starting_weight">
-                        Starting weight (kg)
-                    </label>
-                    <input type="number" name="starting_weight" id="starting_weight" step="0.1" autocomplete="off">
-                    <button>Save Profile</button>
-                </form>
-                <div id="nutritional-info">
-                    <h2>Nutritional Info</h2>
-                    <div>
+            <form id="edit-profile" onsubmit="event.preventDefault();">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <label for="gender">
+                    Gender
+                </label>
+                <select name="gender" id="gender">
+                    <option value="" hidden disabled selected></option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <label for="age">
+                    Age
+                </label>
+                <input type="number" name="age" id="age" step="1" autocomplete="off">
+                <label for="height">
+                    Height (m)
+                </label>
+                <input type="number" name="height" id="height" step="0.01" autocomplete="off">
+                <label for="starting_weight">
+                    Starting weight (kg)
+                </label>
+                <input type="number" name="starting_weight" id="starting_weight" step="0.1" autocomplete="off">
+                <button>Save Profile</button>
+            </form>
+            <div id="nutritional-info">
+                <h2>Nutritional Info</h2>
+                <div>
                     <p>Objective:</p>
                     <p>{{ user.objective }}</p>
-                    </div>
-                    <div>
+                </div>
+                <div>
                     <p>Basal Metabolic Rate:</p>
                     <p>{{ user.bmr }} kcal</p>
-                    </div>
-                    <div>
+                </div>
+                <div>
                     <p>Activity level:</p>
                     <p>{{ user.activity }}</p>
-                    </div>
-                    <div>
+                </div>
+                <div>
                     <p>Daily caloric need:</p>
                     <p>{{ user.daily_calories }} kcal</p>
-                    </div>
-                    <button>Edit Nutritional Info</button>
                 </div>
-                <form id="edit-nutrition" onsubmit="event.preventDefault();">
-                    {% csrf_token %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    <label for="objective">Objective</label>
-                    <select name="objective" id="objective">
-                        <option value="" disabled selected></option>
-                        <option value="1">Extreme weight loss (- 1kg/week)</option>
-                        <option value="2">Weight loss (- 0.5kg/week)</option>
-                        <option value="3">Mild weight loss (- 0.25kg/week)</option>
-                        <option value="4">Maintain weight</option>
-                        <option value="5">Mild weight gain (+ 0.25kg/week)</option>
-                        <option value="6">Weight gain (+ 0.5kg/week)</option>
-                        <option value="7">Extreme weight gain (+ 1kg/week)</option>
-                        
-                    </select>
-                    <label for="objective">Activity level</label>
-                    <select name="activity" id="activity">
-                        <option value="" disabled selected></option>
-                        <option value="1">Sedentary: little or no exercise</option>
-                        <option value="2">Exercise 1-3 times per week</option>
-                        <option value="3">Exercise 4-5 times per week</option>
-                        <option value="4">Daily exercise or intense exercise 3-4 times per week</option>
-                        <option value="5">Intense exercise 6-7 times per week</option>
-                        <option value="6">Very intense exercise daily, or physical job</option>
-                    </select>
-                    <button>Save Nutritional Info</button>
-                </form>
+                <button>Edit Nutritional Info</button>
             </div>
+            <form id="edit-nutrition" onsubmit="event.preventDefault();">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <label for="objective">Objective</label>
+                <select name="objective" id="objective">
+                    <option value="" disabled selected></option>
+                    <option value="1">Extreme weight loss (- 1kg/week)</option>
+                    <option value="2">Weight loss (- 0.5kg/week)</option>
+                    <option value="3">Mild weight loss (- 0.25kg/week)</option>
+                    <option value="4">Maintain weight</option>
+                    <option value="5">Mild weight gain (+ 0.25kg/week)</option>
+                    <option value="6">Weight gain (+ 0.5kg/week)</option>
+                    <option value="7">Extreme weight gain (+ 1kg/week)</option>
+
+                </select>
+                <label for="objective">Activity level</label>
+                <select name="activity" id="activity">
+                    <option value="" disabled selected></option>
+                    <option value="1">Sedentary: little or no exercise</option>
+                    <option value="2">Exercise 1-3 times per week</option>
+                    <option value="3">Exercise 4-5 times per week</option>
+                    <option value="4">Daily exercise or intense exercise 3-4 times per week</option>
+                    <option value="5">Intense exercise 6-7 times per week</option>
+                    <option value="6">Very intense exercise daily, or physical job</option>
+                </select>
+                <button>Save Nutritional Info</button>
+            </form>
         </div>
+    </div>
 
-        <div id="food-log">
-            {% csrf_token %}
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            
-            <h1>Add Food</h1>
+    <div id="food-log">
+        {% csrf_token %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x"
+            viewBox="0 0 16 16">
+            <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+        </svg>
 
-            <div id="search">
-                <input type="text" name="food-name" placeholder="Search food" spellcheck="false" autocomplete="off">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-            </div>
-            <label for="search-results">Most frequent foods</label>
-            <ul id="search-results">
+        <h1>Add Food</h1>
 
-            </ul>
-            <label for="meal">Meal</label>
-            <select name="meal" id="meal">
-                <option value="0">Breakfast</option>
-                <option value="1">Lunch</option>
-                <option value="2">Dinner</option>
-                <option value="3">Snacks</option>
-            </select>
+        <div id="search">
+            <input type="text" name="food-name" placeholder="Search food" spellcheck="false" autocomplete="off">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
         </div>
+        <label for="search-results">Most frequent foods</label>
+        <ul id="search-results">
 
-        <div id="weight-log"></div>
+        </ul>
+        <label for="meal">Meal</label>
+        <select name="meal" id="meal">
+            <option value="0">Breakfast</option>
+            <option value="1">Lunch</option>
+            <option value="2">Dinner</option>
+            <option value="3">Snacks</option>
+        </select>
+    </div>
+
+    <div id="weight-log"></div>
 
 
 
-        <script>
-            const x = [1,2,3,4,5];
-            const y = [70,61.1, 65, 68, 70];
-            
-            new Chart("weightchart", {
-                type: 'line',
-                data: {
-                    labels: x,
-                    datasets: [{
-                        fill: false,
-                        lineTension: 0,
-                        backgroundColor: "rgb(0,0,255)",
-                        borderColor: "rgb(0,0,255)",
-                        data: y
-                    }]
-                },
-                options: {
-                    legend: {display: false},
-                    scales: {
-                        yAxes: [{ticks: {min:60, max:80}}]
-                    }
+    <script>
+        const x = [1, 2, 3, 4, 5];
+        const y = [70, 61.1, 65, 68, 70];
+
+        new Chart("weightchart", {
+            type: 'line',
+            data: {
+                labels: x,
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "rgb(0,0,255)",
+                    borderColor: "rgb(0,0,255)",
+                    data: y
+                }]
+            },
+            options: {
+                legend: { display: false },
+                scales: {
+                    yAxes: [{ ticks: { min: 60, max: 80 } }]
                 }
-            });
-        </script>
+            }
+        });
 
 
-    </body>
+
+        function addWeight() {
+            let weight = document.querySelector('#weight-info input').value;
+            if (weight > 0) {
+                window.location.href = 'addweight/' + parseInt(document.querySelector('input[name="user_id"]').value) + '/' + String(weight);
+            }
+        }
+
+        function removeWeight() {
+            window.location.href = 'removeweight/' + parseInt(document.querySelector('input[name="user_id"]').value);
+        }
+    </script>
+
+
+</body>
+
 </html>

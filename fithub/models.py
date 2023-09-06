@@ -16,7 +16,7 @@ class User(AbstractUser):
 class WeightLog(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     weight = models.FloatField()
-    timestamp = models.DateTimeField(default = datetime.datetime.now())
+    timestamp = models.DateTimeField(default=datetime.datetime.now())
 
 class FoodLog(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
@@ -24,7 +24,7 @@ class FoodLog(models.Model):
     calories = models.IntegerField(default=0)
     weight = models.CharField(max_length=100)
     meal = models.CharField(max_length=100)
-    timestamp = models.DateTimeField(default = datetime.datetime.now())
+    timestamp = models.DateTimeField(default=datetime.datetime.now())
 
 class NutritionalInfo(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)

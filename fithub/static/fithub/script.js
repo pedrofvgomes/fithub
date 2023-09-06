@@ -386,3 +386,4 @@ function addFood(element){
         })
     }).then(location.reload());
 }
+
