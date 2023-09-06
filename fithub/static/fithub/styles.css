@@ -525,3 +525,10 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: left;
     width: 50%;
 }
+#search-results .food input{
+    padding: 0.5em;
+    width: 3em;
+    font-size: 1em;
+    margin-right: 0.5em;
+    text-align: center;
+}

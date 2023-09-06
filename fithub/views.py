@@ -224,7 +224,7 @@ def add_food(request, user_id):
 
         if data.get('calories') != "":
             calories = data['calories']
-            calories = float(calories.split(' ')[0])
+            calories = round(float(calories.split(' ')[0]))
 
         if data.get('meal') != "":
             meal = data['meal']

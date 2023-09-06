@@ -21,7 +21,7 @@ class WeightLog(models.Model):
 class FoodLog(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    calories = models.FloatField(default=0)
+    calories = models.IntegerField(default=0)
     weight = models.CharField(max_length=100)
     meal = models.CharField(max_length=100)
     timestamp = models.DateTimeField(default = datetime.datetime.now())
