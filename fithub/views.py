@@ -49,6 +49,7 @@ def index(request):
 
 
     return render(request, "fithub/index.html", {
+        "month" : datetime.datetime.today().strftime('%B'),
         "calories" : round(calories),
         "date" : today,
         "breakfast" : [log for log in flogs if log.meal == 'Breakfast'],
@@ -315,3 +316,43 @@ def remove_weight(request, user_id):
     lastlog.delete()
 
     return redirect('index')   
+
+
+from datetime import date, timedelta
+
+def weight_data(request, user_id):
+    try:
+        user = User.objects.get(id=int(user_id))
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User not found"}, status=404)
+
+    if request.user != user:
+        return redirect('index')
+
+    today = date.today()
+    start_date = today.replace(day=1)
+    end_date = start_date.replace(day=1, month=start_date.month + 1)
+
+    weight_data_dict = {start_date + timedelta(days=i): None for i in range((end_date - start_date).days)}
+
+
+    weight_logs = WeightLog.objects.filter(user=user, timestamp__gte=start_date, timestamp__lt=end_date).order_by('timestamp')
+
+    for log in weight_logs:
+        log_date = log.timestamp.date()
+        weight_data_dict[log_date] = log.weight
+
+    timestamps = [date.strftime('%d') for date in weight_data_dict.keys()]
+    print(timestamps)
+    weights = [weight_data_dict[date] for date in weight_data_dict.keys()]
+
+    if request.method == 'GET':
+        print(timestamps)
+        return JsonResponse({
+            "timestamps": json.dumps(timestamps),
+            "weights": json.dumps(weights)
+        })
+
+    return JsonResponse({
+        "error": "GET or PUT request required."
+    }, status=400)

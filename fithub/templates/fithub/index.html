@@ -103,7 +103,7 @@
             {% endif %}
         </div>
         <div id="graph">
-            <h2>Weight Evolution</h2>
+            <h2>Weight Evolution over {{ month }}</h2>
             <canvas id="weightchart" style="width: 100%; max-width: 600px;"></canvas>
         </div>
         {% if remove %}
@@ -265,10 +265,14 @@
 
 
     <script>
-        const x = [1, 2, 3, 4, 5];
-        const y = [70, 61.1, 65, 68, 70];
 
-        new Chart("weightchart", {
+        fetch('weight_data/' + String(document.querySelector('input[name="user_id"]').value))
+        .then(response => response.json())
+        .then(data => {
+            let x = JSON.parse(data.timestamps);
+            let y = JSON.parse(data.weights);
+
+            new Chart("weightchart", {
             type: 'line',
             data: {
                 labels: x,
@@ -277,16 +281,21 @@
                     lineTension: 0,
                     backgroundColor: "rgb(0,0,255)",
                     borderColor: "rgb(0,0,255)",
-                    data: y
+                    data: y,
+                    spanGaps: true
                 }]
             },
             options: {
                 legend: { display: false },
                 scales: {
-                    yAxes: [{ ticks: { min: 60, max: 80 } }]
+                    yAxes: [{ ticks: { min: 60, max: 100 } }]
                 }
             }
         });
+        })
+
+
+        
 
 
 

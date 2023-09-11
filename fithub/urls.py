@@ -14,5 +14,6 @@ urlpatterns = [
     path('addfood/<int:user_id>', views.add_food, name='add_food'),
     path('removefood/<int:log_id>', views.remove_food, name='remove_food'),
     path('addweight/<int:user_id>/<str:weight>', views.add_weight, name='add_weight'),
-    path('removeweight/<int:user_id>', views.remove_weight, name='remove_weight')
+    path('removeweight/<int:user_id>', views.remove_weight, name='remove_weight'),
+    path('weight_data/<int:user_id>', views.weight_data, name='weight_data')
 ]

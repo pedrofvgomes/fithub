@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     document.querySelector('#profile').addEventListener('click', function () {
-        if(document.querySelector('#food-log').style.width == 0 || document.querySelector('#food-log').style.width == '0px'){
+        if (document.querySelector('#food-log').style.width == 0 || document.querySelector('#food-log').style.width == '0px') {
             document.querySelector('#profile-view').style.opacity = '100%';
             document.querySelector('#profile-view').style.width = '600px';
             document.querySelector('#profile-view').style.height = '550px';
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     document.querySelector('#add-food').addEventListener('click', function () {
-        if(document.querySelector('#profile-view').style.width == 0 || document.querySelector('#profile-view').style.width == '0px'){
+        if (document.querySelector('#profile-view').style.width == 0 || document.querySelector('#profile-view').style.width == '0px') {
             let food_log = document.querySelector('#food-log');
 
             food_log.style.opacity = '100%';
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 element.style.display = 'block';
                 if (element.id == 'search' || element.classList.contains('food')) element.style.display = 'flex';
             });
-        } 
+        }
     })
 
     document.querySelector('#food-log > svg').addEventListener('click', function () {
@@ -283,50 +283,50 @@ document.addEventListener('DOMContentLoaded', function () {
     // remove food
     let minus = document.querySelectorAll('#logs > .food > svg');
     minus.forEach(element => {
-        element.addEventListener('click', function(){
+        element.addEventListener('click', function () {
             let parent = element.parentElement;
-            window.location.href = 'removefood/' + String(parent.id);    
+            window.location.href = 'removefood/' + String(parent.id);
         })
     });
 
 
     // api search
-    document.querySelector('#search > svg').addEventListener('click', function(){
+    document.querySelector('#search > svg').addEventListener('click', function () {
         document.querySelector('#search-results').innerHTML = '';
 
         let query = document.querySelector('#search input').value;
         document.querySelector('label[for="search-results"]').textContent = `Search results for "${query}"`;
         const key = `2uUmEmCJlenbUg3SUf9CLgJlWN9jD3HLlzVocZ6s`;
         const endpoint = `https://api.nal.usda.gov/fdc/v1/foods/search?`;
-        
+
         let url = `${endpoint}query=${encodeURIComponent(query)}&limit=10&api_key=${key}`;
         console.log(url);
         fetch(url)
-        .then(response => {
-            if(!response.ok)
-                throw new Error(`API request failed with status: ${response.status}`);
-            return response.json();
-        })
-        .then(data =>{
-            const results = data.foods.slice(10);
+            .then(response => {
+                if (!response.ok)
+                    throw new Error(`API request failed with status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                const results = data.foods.slice(10);
 
-            let counter = 0;
+                let counter = 0;
 
-            console.log('Search results:');
-            results.forEach(food => {
-                let cals = 0;
-                let name = "";
+                console.log('Search results:');
+                results.forEach(food => {
+                    let cals = 0;
+                    let name = "";
 
-                let f = document.createElement('li');
-                f.classList.add('food');
+                    let f = document.createElement('li');
+                    f.classList.add('food');
 
-                food.foodNutrients.forEach(nutrient => {
-                    name = food.description;
-                    if (nutrient.nutrientId == 1008)
-                        cals = nutrient.value;
-                });
+                    food.foodNutrients.forEach(nutrient => {
+                        name = food.description;
+                        if (nutrient.nutrientId == 1008)
+                            cals = nutrient.value;
+                    });
 
-                f.innerHTML = `
+                    f.innerHTML = `
                     <span>${name}</span>
                     <span>50g</span>
                     <span>${cals} kcal</span>
@@ -335,34 +335,34 @@ document.addEventListener('DOMContentLoaded', function () {
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>
                 `;
-                if (counter < 15)
-                    document.querySelector('#search-results').appendChild(f);
-                counter++;
-            });
+                    if (counter < 15)
+                        document.querySelector('#search-results').appendChild(f);
+                    counter++;
+                });
 
-            if (counter == 0){
-                document.querySelector('#search-results').innerHTML = '<h2 class="unavailable">No results...</h2>';
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        })
+                if (counter == 0) {
+                    document.querySelector('#search-results').innerHTML = '<h2 class="unavailable">No results...</h2>';
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            })
     })
 
 
     let a = document.querySelector('progress').value;
     let b = document.querySelector('progress').max;
 
-    if(parseInt(a)==parseInt(b)){
+    if (parseInt(a) == parseInt(b)) {
         document.querySelector('progress').classList.add('red');
     }
-    else if(document.querySelector('progress').classList.contains('red')){
+    else if (document.querySelector('progress').classList.contains('red')) {
         document.querySelector('progress').classList.remove('red');
     }
 })
 
 
-function addFood(element){
+function addFood(element) {
     let parent = element.parentElement;
     let name = parent.querySelector(' span:nth-child(1)').textContent;
     let weight = parent.querySelector(' span:nth-child(2)').textContent;
@@ -387,3 +387,14 @@ function addFood(element){
     }).then(location.reload());
 }
 
+
+function addWeight() {
+    let weight = document.querySelector('#weight-info input').value;
+    if (weight > 0) {
+        window.location.href = 'addweight/' + parseInt(document.querySelector('input[name="user_id"]').value) + '/' + String(weight);
+    }
+}
+
+function removeWeight() {
+    window.location.href = 'removeweight/' + parseInt(document.querySelector('input[name="user_id"]').value);
+}
