@@ -111,6 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.querySelector('#edit-nutrition').style.display = 'flex';
                             document.querySelector('#edit-nutrition').style.flexDirection = 'column';
                         }
+
+                        location.reload();
                     })
             }
         })
@@ -358,6 +360,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     else if (document.querySelector('progress').classList.contains('red')) {
         document.querySelector('progress').classList.remove('red');
+    }
+
+    let percentage = document.querySelector('#weight-info span');
+    if (percentage.textContent[1] == '-'){
+        percentage.style.color = 'red';
+    }
+    else{
+        percentage.style.color = 'green';
     }
 })
 

@@ -14,7 +14,11 @@
     <div id="food">
         <div id="calories">
             <h2>{{ date|date:"F jS" }}</h2>
+            {% if newuser %}
+            <h1>Complete your profile first!</h1>
+            {% else %}
             <h1>{{ calories }} / {{ user.daily_calories }} kcal</h1>
+            {% endif %}
             <progress value="{{ calories }}" max="{{user.daily_calories}}" class="blue"></progress>
         </div>
 
@@ -93,13 +97,17 @@
 
     <div id="weight">
         <div id="weight-info">
+            {% if newuser %}
+            <h2 style="margin: auto;">Complete your profile first!</h2>
+            {% else %}
             <h2>This week's weight: </h2>
             {% if newweightlog %}
             <input type="number" placeholder="weight (kg)">
             <button onclick="addWeight();">Add weight</button>
             {% else %}
             <h1>{{ weight }} kg</h1>
-            <span>({{ percentage }})</span>
+            <span class="green">({{ percentage }})</span>
+            {% endif %}
             {% endif %}
         </div>
         <div id="graph">
@@ -288,7 +296,8 @@
             options: {
                 legend: { display: false },
                 scales: {
-                    yAxes: [{ ticks: { min: 60, max: 100 } }]
+                    yAxes: [{ ticks: { min: 60, max: 100 } , scaleLabel:{display:true, labelString:'Weight'}}],
+                    xAxes: [{ scaleLabel:{display:true, labelString:'Day'}}],
                 }
             }
         });

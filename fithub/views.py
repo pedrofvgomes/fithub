@@ -29,15 +29,17 @@ def index(request):
         diff = datetime.datetime.now() - lasttimestamp[0].timestamp.replace(tzinfo=None)
         newweightlog = diff.days >= 7
 
-        # percentage lost
-        start = request.user.starting_weight
-        current = request.user.current_weight
+    # percentage lost
+    start = request.user.starting_weight
+    current = request.user.current_weight
+    try:
         percentage = (current-start)/start * 100
-        if percentage >= 0:
-            percentage = "+ " + "{:.2f}".format(percentage) + '%'
-        else: 
-            percentage = "- " + ("{:.2f}".format(percentage))[1:] + '%'
-
+    except ZeroDivisionError:
+        percentage = 0
+    if percentage >= 0:
+        percentage = "+ " + "{:.2f}".format(percentage) + '%'
+    else: 
+        percentage = "- " + ("{:.2f}".format(percentage))[1:] + '%'
 
 
     # sum of calories
@@ -49,6 +51,7 @@ def index(request):
 
 
     return render(request, "fithub/index.html", {
+        "newuser" : request.user.starting_weight == 0,
         "month" : datetime.datetime.today().strftime('%B'),
         "calories" : round(calories),
         "date" : today,
@@ -294,7 +297,6 @@ def add_weight(request, user_id, weight):
         return redirect('index')
 
     if request.user != user or request.user.starting_weight == 0:
-        print('o')
         return redirect('index')
     
     WeightLog(user = user, weight = float(weight)).save()
@@ -313,7 +315,8 @@ def remove_weight(request, user_id):
     
     id = sorted([log.id for log in WeightLog.objects.filter(user= request.user)])[-1]
     lastlog = WeightLog.objects.get(user = request.user, id = id)
-    lastlog.delete()
+    if len(WeightLog.objects.filter(user = user)) > 1:
+        lastlog.delete()
 
     return redirect('index')   
 
@@ -342,12 +345,10 @@ def weight_data(request, user_id):
         log_date = log.timestamp.date()
         weight_data_dict[log_date] = log.weight
 
-    timestamps = [date.strftime('%d') for date in weight_data_dict.keys()]
-    print(timestamps)
+    timestamps = [date.day  for date in weight_data_dict.keys()]
     weights = [weight_data_dict[date] for date in weight_data_dict.keys()]
 
     if request.method == 'GET':
-        print(timestamps)
         return JsonResponse({
             "timestamps": json.dumps(timestamps),
             "weights": json.dumps(weights)

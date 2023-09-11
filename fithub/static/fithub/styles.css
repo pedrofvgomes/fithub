@@ -209,12 +209,13 @@ progress.red::-webkit-progress-value{
 #weight-info{
     display: flex;  
     flex-direction: row;
+    line-height: 2em;
+    margin-top: 1em;
 }
 #weight-info h2{
     font-weight: 700;
     font-size: 2em;
     margin: 0;
-    margin-top: 0.5em;
 }
 #weight-info h1{
     font-weight: 800;
@@ -227,7 +228,6 @@ progress.red::-webkit-progress-value{
     font-weight: 700;
     font-size: 1em;
     color: rgb(0,255,0);
-    margin-top: 1.1em;
     margin-left: 0.5em;
 }
 #graph h2{
@@ -529,14 +529,17 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
 }
 
+#weight-info input, #weight-info button{
+    padding: 0.2em;
+}
 #weight-info button{
-    width: 20%;
+    width: 25%;
     margin-left: 1em;
     margin-right: 0;
 }
 #weight-info input{
     margin-right: 0;
-    margin-left: 2.5em;
+    margin-left: 1em;
     padding: 0;
     padding-left: 0.5em;
     padding-right: 0.5em;
