@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-import datetime, pytz
+import datetime
 
 class User(AbstractUser):
     age = models.IntegerField(default=0)
