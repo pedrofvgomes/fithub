@@ -5,19 +5,27 @@ from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from django.urls import reverse
 from .models import User, FoodLog, WeightLog
-import datetime, pytz
+import datetime
 
 
 def index(request):
     today = datetime.datetime.now()
 
     # most recent weight log
-    id = sorted([log.id for log in WeightLog.objects.filter(user= request.user)])
+    try:
+        s = [log.id for log in WeightLog.objects.filter(user= request.user)]
+        id = sorted(s)
+    except TypeError:
+        id = []
     if len(id) > 0:
         id = id[-1]
     else:
         id = 0
-    lasttimestamp = WeightLog.objects.filter(user = request.user, id = id)
+    try:
+        lasttimestamp = WeightLog.objects.filter(user = request.user, id = id)
+    except TypeError:
+        lasttimestamp = []
+
     if len(lasttimestamp) != 0:
         weight = lasttimestamp[0].weight
         newweightlog = False
@@ -30,12 +38,15 @@ def index(request):
         newweightlog = diff.days >= 7
 
     # percentage lost
-    start = request.user.starting_weight
-    current = request.user.current_weight
     try:
+        start = request.user.starting_weight
+        current = request.user.current_weight
         percentage = (current-start)/start * 100
-    except ZeroDivisionError:
+    except (AttributeError, ZeroDivisionError):
+        start = 0
+        current = 0
         percentage = 0
+    
     if percentage >= 0:
         percentage = "+ " + "{:.2f}".format(percentage) + '%'
     else: 
@@ -49,9 +60,14 @@ def index(request):
             flogs.append(log)
     calories = sum([l.calories for l in flogs])
 
+    try:
+        remove = len(WeightLog.objects.filter(user = request.user))
+    except TypeError:
+        remove = False
+
 
     return render(request, "fithub/index.html", {
-        "newuser" : request.user.starting_weight == 0,
+        "newuser" : start == 0,
         "month" : datetime.datetime.today().strftime('%B'),
         "calories" : round(calories),
         "date" : today,
@@ -62,7 +78,7 @@ def index(request):
         "newweightlog" : newweightlog,
         "weight" : weight,
         "percentage" : percentage,
-        "remove" : len(WeightLog.objects.filter(user = request.user))
+        "remove" : remove
     })
 def authentication(request):
     return render(request, "fithub/authentication.html")
