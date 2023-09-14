@@ -310,7 +310,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                const results = data.foods.slice(10);
+                const results = data.foods.slice(0,10);
+
+                console.log(results);
 
                 let counter = 0;
 
@@ -328,10 +330,17 @@ document.addEventListener('DOMContentLoaded', function () {
                             cals = nutrient.value;
                     });
 
-                    f.innerHTML = `
-                    <span>${name}</span>
-                    <span>50g</span>
-                    <span>${cals} kcal</span>
+
+                    f.innerHTML = `<span>${name}</span>`;
+
+                    if(food.servingSizeUnit == null || food.servingSize == null)
+                        f.innerHTML += '<span>1 Unit</span><input type="hidden" name="serving" value="0">';
+                    else{
+                        f.innerHTML += `<input type='number' name='serving' value='${food.servingSize}' placeholder = 'Serving Size'><span class="unit">${food.servingSizeUnit}</span><input type="hidden" name="calorie_proportion" value="${parseFloat(cals) / parseFloat(food.servingSize)}">`;
+                    }
+
+                    f.innerHTML +=
+                    `<span>${cals} kcal</span>
                     <svg onclick="addFood(this)" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -375,8 +384,17 @@ document.addEventListener('DOMContentLoaded', function () {
 function addFood(element) {
     let parent = element.parentElement;
     let name = parent.querySelector(' span:nth-child(1)').textContent;
-    let weight = parent.querySelector(' span:nth-child(2)').textContent;
-    let calories = parent.querySelector(' span:nth-child(3)').textContent;
+    let weight = parent.querySelector('input[name="serving"]').value;
+    console.log(weight);
+    var unit;
+    var calories;
+    try {
+        unit = parent.querySelector('.unit').textContent; 
+        calories = parent.querySelector('input[name="calorie_proportion"]').value * parent.querySelector('input[name="serving"]').value;
+    } catch (TypeError) {
+        unit = 0;
+        calories = parent.querySelector('span:last-of-type').textContent;
+    }
     let meal_sel = document.querySelector("#meal");
     let meal_text = meal_sel.options[meal_sel.selectedIndex].text;
     let user_id = document.querySelector('#edit-profile input[name="user_id"]').value;
@@ -391,6 +409,7 @@ function addFood(element) {
         body: JSON.stringify({
             name: name,
             weight: weight,
+            unit: unit,
             calories: calories,
             meal: meal_text
         })

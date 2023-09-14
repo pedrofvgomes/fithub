@@ -27,7 +27,7 @@
             {% for food in breakfast %}
             <li class="food" id="{{ food.id }}">
                 <span>{{ food.name }}</span>
-                <span>{{ food.weight }}</span>
+                <span>{{ food.serving }}</span>
                 <span>{{ food.calories }} kcal</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                     class="bi bi-dash-circle" viewBox="0 0 16 16">
@@ -44,7 +44,7 @@
             {% for food in lunch %}
             <li class="food" id="{{ food.id }}">
                 <span>{{ food.name }}</span>
-                <span>{{ food.weight }}</span>
+                <span>{{ food.serving }}</span>
                 <span>{{ food.calories }} kcal</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                     class="bi bi-dash-circle" viewBox="0 0 16 16">
@@ -61,7 +61,7 @@
             {% for food in dinner %}
             <li class="food" id="{{ food.id }}">
                 <span>{{ food.name }}</span>
-                <span>{{ food.weight }}</span>
+                <span>{{ food.serving }}</span>
                 <span>{{ food.calories }} kcal</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                     class="bi bi-dash-circle" viewBox="0 0 16 16">
@@ -78,7 +78,7 @@
             {% for food in snacks %}
             <li class="food" id="{{ food.id }}">
                 <span>{{ food.name }}</span>
-                <span>{{ food.weight }}</span>
+                <span>{{ food.serving }}</span>
                 <span>{{ food.calories }} kcal</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                     class="bi bi-dash-circle" viewBox="0 0 16 16">
@@ -248,7 +248,7 @@
         <h1>Add Food</h1>
 
         <div id="search">
-            <input type="text" name="food-name" placeholder="Search food" spellcheck="false" autocomplete="off">
+            <input type="text" name="food-name" placeholder="Search food" spellcheck="false" autocomplete="off" autofocus>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-search"
                 viewBox="0 0 16 16">
                 <path

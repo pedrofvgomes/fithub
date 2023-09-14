@@ -274,17 +274,21 @@ def add_food(request, user_id):
         if data.get('name') != "":
             name = data['name']
         
-        if data.get('weight') != "":
-            weight = data['weight']
+        if data.get('weight') != "" and data.get('unit') != "":
+            serving = str(data['weight']) + str(data['unit'])
+            if data['unit'] == 0:
+                serving = '1 Unit'
 
         if data.get('calories') != "":
-            calories = data['calories']
-            calories = round(float(calories.split(' ')[0]))
+            if type(data['calories']) != str:
+                calories = round(data['calories'])
+            else:
+                calories = int(data['calories'].split(' ')[0])
 
         if data.get('meal') != "":
             meal = data['meal']
 
-        food = FoodLog(user = user, name = name, weight = weight, calories = calories, meal = meal)
+        food = FoodLog(user = user, name = name, serving = serving, calories = calories, meal = meal)
         food.save()
 
         return HttpResponse(status=204)
