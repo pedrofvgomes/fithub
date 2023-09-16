@@ -1,3 +1,8 @@
+## FitHub
+A Django-based web application has been created to offer individuals a comprehensive solution for managing various aspects of their health and fitness endeavors. This app proves invaluable for individuals seeking to monitor their dietary selections, physical activities, and overall well-being goals. The project originated as my final assignment for the CS50's Web Programming with Python and JavaScript course. However, after submitting it, I made the decision to further enhance its complexity and uniqueness. 
+
+<img src="https://github.com/pedrofvgomes/fithub/blob/main/screenshot.jpg?raw=true">
+
 # How To Run
 
 In the root directory, run <code>python ./manage.py makemigrations fithub</code>, then <code>python ./manage.py migrate</code>, to make all the database migrations needed for the applications. Finally, run <code>python ./manage.py runserver</code> and open the given IP Address that's given to you by the console output in your preferred browser.
